@@ -24,19 +24,16 @@ public class MetAPIReader {
                 .orElse(null);
         printWeatherFromId(location.getId());
     }
+    
     public static void printWeatherFromId(String locId) throws JsonProcessingException {
         if(locId != null) {
-            String fullURL = BASE_URL + locId + "?res=3hourly&key=" + getAPIKey();
-            String data = getData(fullURL);
-            ObjectMapper objectMapper = new ObjectMapper();
+            Map<String, metResponse> metResponseMap = getMETResponseMap(locId);
 
-            Map<String, metResponse> weathermap = objectMapper.readValue(data, new TypeReference<Map<String, metResponse>>() {});
+            List<DataForTime> dataForDays = metResponseMap.get("SiteRep").getDv().getLocation().getPeriod();
 
-            List<DataForTime> dataDays = weathermap.get("SiteRep").getDv().getLocation().getPeriod();
+            Map<String, DataKey> dataKeyMap = getDataKeyMap(metResponseMap);
 
-            Map<String, DataKey> dataKeyMap = getDataKeyMap(weathermap);
-
-            for (DataForTime day : dataDays) {
+            for (DataForTime day : dataForDays) {
                 System.out.println("----" + day.getValue() + "-----");
                 List<Map<String, String>> dataPoints = day.getRep();
                 for (Map<String, String> dp : dataPoints) {
@@ -46,6 +43,15 @@ public class MetAPIReader {
         }else{
             System.out.println("error null id");
         }
+    }
+
+    private static Map<String, metResponse> getMETResponseMap(String locId) throws JsonProcessingException {
+        String query= "?res=3hourly&key=";
+        String fullURL = BASE_URL + locId + query + getAPIKey();
+        String data = getData(fullURL);
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        return objectMapper.readValue(data, new TypeReference<Map<String, metResponse>>() {});
     }
 
     private static Map<String, DataKey> getDataKeyMap(Map<String, metResponse> weathermap) {
@@ -89,6 +95,7 @@ public class MetAPIReader {
                 .get(String.class);
         return data;
     }
+
     private static String getAPIKey() {
         Map<String, String> env = System.getenv();
         return env.get("MET_API_KEY");
