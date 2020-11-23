@@ -1,5 +1,7 @@
 package training.metofficeweather;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import java.util.Scanner;
 
 public class WeatherCLI {
@@ -81,6 +83,12 @@ public class WeatherCLI {
 
     private static void runNumberCommand(String command) {
         System.out.println("get weather by station index on printed list");
+        try {
+            MetAPIReader.getWeather(command);
+        }
+        catch (JsonProcessingException e) {
+            ;
+        }
     }
 
     private static void runStationNameCommand(String command) {
