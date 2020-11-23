@@ -8,7 +8,7 @@ public class Main {
     public static void main(String args[]) {
         try {
           List<Location> locations= MetAPIReader.getLocations();
-          MetAPIReader.printWeatherFromName(locations.get(1).getName(),locations);
+          MetAPIReader.printWeatherFromName(locations.get(1).getName());
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
