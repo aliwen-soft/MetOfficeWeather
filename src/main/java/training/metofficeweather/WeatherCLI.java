@@ -81,7 +81,7 @@ public class WeatherCLI {
 
     private static void runNumberCommand(String command) {
         try {
-            MetAPIReader.printWeatherFromId(command);
+           MetAPIReader.printWeatherFromId(command);
         }
         catch (JsonProcessingException e) {
             System.out.println("Error processing JSON information.");

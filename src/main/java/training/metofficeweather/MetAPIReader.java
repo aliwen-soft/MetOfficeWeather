@@ -8,6 +8,7 @@ import org.glassfish.jersey.jackson.JacksonFeature;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,16 +25,41 @@ public class MetAPIReader {
                 .orElse(null);
         printWeatherFromId(location.getId());
     }
-    
+
+    public static List<String> returnWeatherFromId(String locId) throws JsonProcessingException {
+        //todo this should return some sort of weather object that has sucess in it
+        List<String> datapoints=new ArrayList<>();
+        if(locId != null) {
+            Map<String, metResponse> metResponseMap = getMETResponseMap(locId);
+            if (metResponseMap.get("SiteRep").getDv().getLocation()!= null) {
+                List<DataForTime> dataForDays = metResponseMap.get("SiteRep").getDv().getLocation().getPeriod();
+                Map<String, DataKey> dataKeyMap = getDataKeyMap(metResponseMap);
+                for (DataForTime day : dataForDays) {
+                    List<Map<String, String>> dataPoints = day.getRep();
+
+                    for (Map<String, String> dp : dataPoints) {
+                        String stringpoint="";
+                        for(String point: dp.keySet()){
+                            stringpoint = stringpoint +"\n"+ datapointToString(dp, dataKeyMap, point);
+                        }
+                        datapoints.add(stringpoint);
+                    }
+                }
+            }else{
+                System.out.println("that is not a valid id");
+            }
+        }else{
+            System.out.println("error null id");
+        }
+        return datapoints;
+    }
+
     public static void printWeatherFromId(String locId) throws JsonProcessingException {
         if(locId != null) {
             Map<String, metResponse> metResponseMap = getMETResponseMap(locId);
            if (metResponseMap.get("SiteRep").getDv().getLocation()!= null) {
-
                List<DataForTime> dataForDays = metResponseMap.get("SiteRep").getDv().getLocation().getPeriod();
-
                Map<String, DataKey> dataKeyMap = getDataKeyMap(metResponseMap);
-
                for (DataForTime day : dataForDays) {
                    System.out.println("----" + day.getValue() + "-----");
                    List<Map<String, String>> dataPoints = day.getRep();
@@ -68,12 +94,17 @@ public class MetAPIReader {
         return dataKeyMap;
     }
 
+
     private static void printDataPoint(Map<String,String> datapoint, Map<String, DataKey> keys){
         for(String dp: datapoint.keySet()){
-            DataKey key =keys.get(dp);
-            String decodedDataPoint= WeatherTypeDecoder.translateWeatherType(key.getDescription(),datapoint.get(dp));
-            System.out.println(key.getDescription() + ": "+ decodedDataPoint+" "+ key.getUnits());
+            System.out.println(datapointToString(datapoint, keys, dp));
         }
+    }
+
+    private static String datapointToString(Map<String, String> datapoint, Map<String, DataKey> keys, String dp) {
+        DataKey key = keys.get(dp);
+        String decodedDataPoint= WeatherTypeDecoder.translateWeatherType(key.getDescription(), datapoint.get(dp));
+        return key.getDescription() + ": "+ decodedDataPoint+" "+ key.getUnits();
     }
 
     public static List<Location> getLocations() {
