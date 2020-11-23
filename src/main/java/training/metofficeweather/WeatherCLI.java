@@ -90,7 +90,7 @@ public class WeatherCLI {
 
     private static void runStationNameCommand(String command) {
         try {
-            MetAPIReader.printWeatherFromName(command, MetAPIReader.getLocations());
+            MetAPIReader.printWeatherFromName(command);
         }
         catch (JsonProcessingException e) {
             System.out.println("Error processing JSON information.");
