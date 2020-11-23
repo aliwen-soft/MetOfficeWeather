@@ -30,7 +30,7 @@ public class Main {
         try {
             Map<String, Map<String, List<Location>>> mapLocs = objectMapper.readValue(name, new TypeReference<Map<String,Map<String, List<Location>>>>(){});
             List<Location> locations= mapLocs.get("Locations").get("Location");
-
+          
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

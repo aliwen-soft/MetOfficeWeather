@@ -11,8 +11,8 @@ public class Location {
     private String obsSource;
     private String nationalPark;
 
-    public  void prinloc(){
-        System.out.println(name);;
+    public void prinloc(){
+        System.out.println(this.name);
     }
 
     public String getNationalPark() {
