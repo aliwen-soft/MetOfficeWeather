@@ -13,6 +13,18 @@
             <h2>Weather Information</h2>
             <div>
                 <p>You entered location id <span th:text="${weatherInfo.locationId}"></span></p>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Data</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="Data : ${weatherInfo.weatherData}">
+                        <td th:text="${Data}"></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </body>
