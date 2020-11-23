@@ -20,9 +20,4 @@ public class Main {
             e.printStackTrace();
         }
     }
-
-    private static String getAPIKey() {
-        Map<String, String> env = System.getenv();
-        return env.get("MET_API_KEY");
-    }
 }
