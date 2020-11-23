@@ -32,11 +32,10 @@ public class DataKey {
         this.units = units;
     }
 
-    @JsonProperty("$")
     public String getDescription() {
         return description;
     }
-    @JsonProperty("$")
+
     public void setDescription(String description) {
         this.description = description;
     }

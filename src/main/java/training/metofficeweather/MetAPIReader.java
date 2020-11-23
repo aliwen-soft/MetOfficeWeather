@@ -3,7 +3,6 @@ package training.metofficeweather;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.javafx.collections.MappingChange;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
 import javax.ws.rs.client.Client;
@@ -31,13 +30,13 @@ public class MetAPIReader {
             String data = getData(fullURL);
             ObjectMapper objectMapper = new ObjectMapper();
 
-            Map<String, WeatherResponse> weathermap = objectMapper.readValue(data, new TypeReference<Map<String, WeatherResponse>>() {});
+            Map<String, metResponse> weathermap = objectMapper.readValue(data, new TypeReference<Map<String, metResponse>>() {});
 
-            List<DataDays> dataDays = weathermap.get("SiteRep").getDv().getLocation().getPeriod();
+            List<DataForTime> dataDays = weathermap.get("SiteRep").getDv().getLocation().getPeriod();
 
             Map<String, DataKey> dataKeyMap = getDataKeyMap(weathermap);
 
-            for (DataDays day : dataDays) {
+            for (DataForTime day : dataDays) {
                 System.out.println("----" + day.getValue() + "-----");
                 List<Map<String, String>> dataPoints = day.getRep();
                 for (Map<String, String> dp : dataPoints) {
@@ -49,8 +48,8 @@ public class MetAPIReader {
         }
     }
 
-    private static Map<String, DataKey> getDataKeyMap(Map<String, WeatherResponse> weathermap) {
-        List<DataKey> dataKeyList= weathermap.get("SiteRep").getWx().get("Param");
+    private static Map<String, DataKey> getDataKeyMap(Map<String, metResponse> weathermap) {
+        List<DataKey> dataKeyList= weathermap.get("SiteRep").getMetaData().get("Param");
         Map<String,DataKey> dataKeyMap=new HashMap<>();
         for(DataKey key :dataKeyList){
             dataKeyMap.put(key.getName(),key);
