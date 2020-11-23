@@ -28,18 +28,22 @@ public class MetAPIReader {
     public static void printWeatherFromId(String locId) throws JsonProcessingException {
         if(locId != null) {
             Map<String, metResponse> metResponseMap = getMETResponseMap(locId);
+           if (metResponseMap.get("SiteRep").getDv().getLocation()!= null) {
 
-            List<DataForTime> dataForDays = metResponseMap.get("SiteRep").getDv().getLocation().getPeriod();
+               List<DataForTime> dataForDays = metResponseMap.get("SiteRep").getDv().getLocation().getPeriod();
 
-            Map<String, DataKey> dataKeyMap = getDataKeyMap(metResponseMap);
+               Map<String, DataKey> dataKeyMap = getDataKeyMap(metResponseMap);
 
-            for (DataForTime day : dataForDays) {
-                System.out.println("----" + day.getValue() + "-----");
-                List<Map<String, String>> dataPoints = day.getRep();
-                for (Map<String, String> dp : dataPoints) {
-                    printDataPoint(dp, dataKeyMap);
-                }
-            }
+               for (DataForTime day : dataForDays) {
+                   System.out.println("----" + day.getValue() + "-----");
+                   List<Map<String, String>> dataPoints = day.getRep();
+                   for (Map<String, String> dp : dataPoints) {
+                       printDataPoint(dp, dataKeyMap);
+                   }
+               }
+           }else{
+               System.out.println("that is not a valid id");
+           }
         }else{
             System.out.println("error null id");
         }
