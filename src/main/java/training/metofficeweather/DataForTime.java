@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import java.util.Map;
 
-public class DataDays {
+public class DataForTime {
     private String type;
     private String value;
     private List<Map<String,String>> rep;

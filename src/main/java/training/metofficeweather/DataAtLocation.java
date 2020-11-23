@@ -4,15 +4,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class DataColletion {
+public class DataAtLocation {
     private String i;
-    private String latval;
-    private String longval;
+    private String lat;
+    private String lon;
     private String name;
     private String country;
     private String continent;
     private String elevation;
-    private List<DataDays> period;
+    private List<DataForTime> period;
 
     public String getI() {
         return i;
@@ -22,21 +22,20 @@ public class DataColletion {
         this.i = i;
     }
 
-    @JsonProperty("lat")
-    public String getLatval() {
-        return latval;
+    public String getLat() {
+        return lat;
     }
-    @JsonProperty("lat")
-    public void setLatval(String latval) {
-        this.latval = latval;
+
+    public void setLat(String lat) {
+        this.lat = lat;
     }
-    @JsonProperty("lon")
-    public String getLongval() {
-        return longval;
+
+    public String getLon() {
+        return lon;
     }
-    @JsonProperty("lon")
-    public void setLongval(String longval) {
-        this.longval = longval;
+
+    public void setLon(String lon) {
+        this.lon = lon;
     }
 
     public String getName() {
@@ -72,11 +71,11 @@ public class DataColletion {
     }
 
     @JsonProperty("Period")
-    public List<DataDays> getPeriod() {
+    public List<DataForTime> getPeriod() {
         return period;
     }
     @JsonProperty("Period")
-    public void setPeriod(List<DataDays> period) {
+    public void setPeriod(List<DataForTime> period) {
         this.period = period;
     }
 }

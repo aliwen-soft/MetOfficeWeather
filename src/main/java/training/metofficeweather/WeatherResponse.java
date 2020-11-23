@@ -2,30 +2,33 @@ package training.metofficeweather;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
-import java.util.Map;
-
 public class WeatherResponse {
-    private Map<String, List<DataKey>> wx;
-    private WeatherDoc dV;
+    private String dataDate;
+    private String type;
+    private DataAtLocation location;
 
-    @JsonProperty("Wx")
-    public Map<String, List<DataKey>> getWx() {
-        return wx;
+    public String getDataDate() {
+        return dataDate;
     }
 
-    @JsonProperty("Wx")
-    public void setWx(Map<String, List<DataKey>> wx) {
-        this.wx = wx;
+    public void setDataDate(String dataDate) {
+        this.dataDate = dataDate;
     }
 
-    @JsonProperty("DV")
-    public WeatherDoc getDv() {
-        return dV;
+    public String getType() {
+        return type;
     }
 
-    @JsonProperty("DV")
-    public void setDv(WeatherDoc dv) {
-        this.dV = dv;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    @JsonProperty("Location")
+    public DataAtLocation getLocation() {
+        return location;
+    }
+    @JsonProperty("Location")
+    public void setLocation(DataAtLocation location) {
+        this.location = location;
     }
 }
