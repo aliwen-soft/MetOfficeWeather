@@ -57,7 +57,8 @@ public class MetAPIReader {
     private static void printDataPoint(Map<String,String> datapoint, Map<String, DataKey> keys){
         for(String dp: datapoint.keySet()){
             DataKey key =keys.get(dp);
-            System.out.println(key.getDescription() + ": "+ datapoint.get(dp)+" "+ key.getUnits());
+            String decodedDataPoint= WeatherTypeDecoder.translateWeatherType(key.getDescription(),datapoint.get(dp));
+            System.out.println(key.getDescription() + ": "+ decodedDataPoint+" "+ key.getUnits());
         }
     }
 
