@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MetAPIReader {
+    public static final List<Location> DEFAULT_LOCATIONS = getLocations();
 
     private static final String BASE_URL = "http://datapoint.metoffice.gov.uk/public/data/val/wxfcs/all/json/";
 
@@ -43,7 +44,6 @@ public class MetAPIReader {
         }
     }
 
-
     private static Map<String, DataKey> getDataKeyMap(Map<String, WeatherResponse> weathermap) {
         List<DataKey> dataKeyList= weathermap.get("SiteRep").getWx().get("Param");
         Map<String,DataKey> dataKeyMap=new HashMap<>();
@@ -61,13 +61,19 @@ public class MetAPIReader {
         }
     }
 
-    public static List<Location> getLocations() throws JsonProcessingException {
-        String fullURL = BASE_URL + "sitelist" + "?key=" + getAPIKey();
-        String data=getData(fullURL);
-        ObjectMapper objectMapper = new ObjectMapper();
-        Map<String, Map<String, List<Location>>> mapLocs = objectMapper.readValue(data, new TypeReference<Map<String, Map<String, List<Location>>>>() {
-        });
-        List<Location> locations = mapLocs.get("Locations").get("Location");
+    public static List<Location> getLocations() {
+        List<Location> locations = null;
+        try {
+            String fullURL = BASE_URL + "sitelist" + "?key=" + getAPIKey();
+            String data = getData(fullURL);
+            ObjectMapper objectMapper = new ObjectMapper();
+            Map<String, Map<String, List<Location>>> mapLocs = objectMapper.readValue(data, new TypeReference<Map<String, Map<String, List<Location>>>>() {
+            });
+            locations = mapLocs.get("Locations").get("Location");
+        }
+        catch (JsonProcessingException e) {
+            System.out.println("Critical: default locations could not be loaded.");
+        }
         return locations;
     }
 

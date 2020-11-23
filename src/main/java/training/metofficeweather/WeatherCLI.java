@@ -10,6 +10,8 @@ public class WeatherCLI {
     }
 
     public static void run() {
+        if (MetAPIReader.DEFAULT_LOCATIONS == null)
+            return;
         Scanner scanner = new Scanner(System.in);
 
         printWelcome();
@@ -21,11 +23,8 @@ public class WeatherCLI {
 
             if (isNumberCommand(command))
                 runNumberCommand(command);
-            else if (!isPaginateCommand(command) && !isExitCommand(command))
+            else if (!isExitCommand(command))
                 runStationNameCommand(command);
-            else
-                while (isPaginateCommand(command))
-                    runPaginateCommand(command);
             if (isExitCommand(command) || shouldDiscontinueCommandRequests(scanner))
                 break;
         }
@@ -43,7 +42,13 @@ public class WeatherCLI {
     private static void printHighlightedWeatherStations() {
         System.out.println("Enter the name of a weather station you would like the forecast for!");
         System.out.println("Here are some weather stations to choose from if you need inspiration:");
-
+        System.out.println();
+        for (int i = 0; i < 10; i++) {
+            System.out.printf("%9s %s\n", "[" + MetAPIReader.DEFAULT_LOCATIONS.get(i).getId() + "]",
+                    MetAPIReader.DEFAULT_LOCATIONS.get(i).getName());
+        }
+        System.out.println();
+        System.out.println("Enter an ID or name (from this list or not), or choose \"exit\":");
     }
 
     private static String removeExcessSpace(String string) {
@@ -62,13 +67,6 @@ public class WeatherCLI {
         }
     }
 
-    private static boolean isPaginateCommand(String command) {
-        return command.equalsIgnoreCase("next") ||
-                command.equalsIgnoreCase("prev") ||
-                command.equalsIgnoreCase("previous") ||
-                command.equalsIgnoreCase("back");
-    }
-
     private static boolean isExitCommand(String command) {
         return command.equalsIgnoreCase("exit") || command.equalsIgnoreCase("quit");
     }
@@ -82,20 +80,20 @@ public class WeatherCLI {
     }
 
     private static void runNumberCommand(String command) {
-        System.out.println("get weather by station index on printed list");
         try {
-            MetAPIReader.getWeather(command);
+            MetAPIReader.printWeatherFromId(command);
         }
         catch (JsonProcessingException e) {
-            ;
+            System.out.println("Error processing JSON information.");
         }
     }
 
     private static void runStationNameCommand(String command) {
-        System.out.println("get weather for station name anywhere in list");
-    }
-
-    private static void runPaginateCommand(String command) {
-        System.out.println("get previous/next list of 10 stations");
+        try {
+            MetAPIReader.printWeatherFromName(command, MetAPIReader.getLocations());
+        }
+        catch (JsonProcessingException e) {
+            System.out.println("Error processing JSON information.");
+        }
     }
 }
