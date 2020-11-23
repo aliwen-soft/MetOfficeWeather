@@ -1,5 +1,6 @@
 package training.metofficeweather;
 
+import java.beans.Visibility;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -51,12 +52,22 @@ public class WeatherTypeDecoder {
         put("EX", "Excellent - More than 40 km");
 
     }};
-    
-    public static String getWeatherType(String type){
+
+    private static String getWeatherType(String type){
         return TYPE_MAP.get(type);
     }
 
-    public static String getVisibilityType(String type){
+    private static String getVisibilityType(String type){
         return VISIBILITY_MAP.get(type);
+    }
+
+    public static String translateWeatherType(String name, String result){
+        if (name.equals("Weather Type")){
+            return getWeatherType(result);
+        }else if(name.equals("Visibility")){
+            return getVisibilityType(result);
+        }else{
+            return result;
+        }
     }
 }
