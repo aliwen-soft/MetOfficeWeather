@@ -17,8 +17,15 @@ public class MetAPIReader {
 
     private static final String BASE_URL = "http://datapoint.metoffice.gov.uk/public/data/val/wxfcs/all/json/";
 
-    public static void getWeather(String loc) throws JsonProcessingException {
-        String fullURL = BASE_URL + loc + "?res=3hourly&key=" + getAPIKey();
+    public static void printWeatherFromName(String locName, List<Location> locations) throws JsonProcessingException {
+        Location location = locations.stream()
+                .filter(loc -> locName.equals(loc.getName()))
+                .findAny()
+                .orElse(null);
+        printWeatherFromId(location.getId());
+    }
+    public static void printWeatherFromId(String locId) throws JsonProcessingException {
+        String fullURL = BASE_URL + locId + "?res=3hourly&key=" + getAPIKey();
         String data= getData(fullURL);
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String,  WeatherResponse > weathermap = objectMapper.readValue(data, new TypeReference<Map<String, WeatherResponse>>() {});
