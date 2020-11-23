@@ -24,21 +24,27 @@ public class MetAPIReader {
         Map<String,  WeatherResponse > weathermap = objectMapper.readValue(data, new TypeReference<Map<String, WeatherResponse>>() {});
 
         List<DataDays> dataDays =weathermap.get("SiteRep").getDv().getLocation().getPeriod();
-        List<DataKey> dataKeyList=weathermap.get("SiteRep").getWx().get("Param");
 
-        Map<String,DataKey> dataKeyMap=new HashMap<>();
-
-        for(DataKey key :dataKeyList){
-            dataKeyMap.put(key.getName(),key);
-        }
-        dataKeyMap.put("$",new DataKey("$","Mins", "Time"));
+        Map<String, DataKey> dataKeyMap = getDataKeyMap(weathermap);
 
         for (DataDays day:dataDays) {
+            System.out.println("----"+day.getValue()+"-----");
             List<Map<String, String>> dataPoints = day.getRep();
             for(Map<String, String> dp :dataPoints){
                 printDataPoint(dp,dataKeyMap);
             }
         }
+    }
+
+
+    private static Map<String, DataKey> getDataKeyMap(Map<String, WeatherResponse> weathermap) {
+        List<DataKey> dataKeyList= weathermap.get("SiteRep").getWx().get("Param");
+        Map<String,DataKey> dataKeyMap=new HashMap<>();
+        for(DataKey key :dataKeyList){
+            dataKeyMap.put(key.getName(),key);
+        }
+        dataKeyMap.put("$",new DataKey("$","Mins", "Time"));
+        return dataKeyMap;
     }
 
     private static void printDataPoint(Map<String,String> datapoint, Map<String, DataKey> keys){

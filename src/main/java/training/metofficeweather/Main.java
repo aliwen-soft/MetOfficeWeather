@@ -15,7 +15,7 @@ public class Main {
     public static void main(String args[]) {
         try {
           List<Location> locations= MetAPIReader.getLocations();
-          MetAPIReader.getWeather(locations.get(0).getId());
+          MetAPIReader.getWeather(locations.get(1).getId());
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
