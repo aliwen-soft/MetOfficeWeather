@@ -18,6 +18,9 @@ public class MetAPIReader {
 
     private static final String BASE_URL = "http://datapoint.metoffice.gov.uk/public/data/val/wxfcs/all/json/";
 
+    private MetAPIReader() {
+    }
+
     public static void printWeatherFromName(String locName) throws JsonProcessingException {
         Location location = getLocationFromName(locName);
         printWeatherFromId(location.getId());
