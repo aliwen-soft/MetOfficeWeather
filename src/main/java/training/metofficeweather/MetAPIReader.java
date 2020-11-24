@@ -19,83 +19,72 @@ public class MetAPIReader {
     private static final String BASE_URL = "http://datapoint.metoffice.gov.uk/public/data/val/wxfcs/all/json/";
 
     public static void printWeatherFromName(String locName) throws JsonProcessingException {
+        Location location = getLocationFromName(locName);
+        printWeatherFromId(location.getId());
+    }
+
+    private static Location getLocationFromName(String locName) {
         Location location = DEFAULT_LOCATIONS.stream()
                 .filter(loc -> locName.equals(loc.getName()))
                 .findAny()
                 .orElse(null);
-        printWeatherFromId(location.getId());
+        return location;
     }
 
-    public static List<WeatherDataPoint> returnWeatherFromId(String locId) throws JsonProcessingException {
-        //todo this should return some sort of weather object that has sucess in it
-        List<WeatherDataPoint> datapoints=new ArrayList<>();
-        if(locId != null) {
+    public static List<WeatherDataPoint> getListOfWeatherDataPointsFromName(String locName) throws JsonProcessingException {
+        Location location = getLocationFromName(locName);
+        return getListOfWeatherDataPoints(location.getId());
+    }
+
+    public static List<WeatherDataPoint> getListOfWeatherDataPoints(String locId) throws JsonProcessingException {
+        List<WeatherDataPoint> datapoints = new ArrayList<>();
+        if (locId != null) {
             Map<String, metResponse> metResponseMap = getMETResponseMap(locId);
-            if (metResponseMap.get("SiteRep").getDv().getLocation()!= null) {
+            if (metResponseMap.get("SiteRep").getDv().getLocation() != null) {
                 List<DataForTime> dataForDays = metResponseMap.get("SiteRep").getDv().getLocation().getPeriod();
                 Map<String, DataKey> dataKeyMap = getDataKeyMap(metResponseMap);
                 for (DataForTime day : dataForDays) {
                     List<WeatherDataPoint> dataPoints = day.getRep();
-                    for (WeatherDataPoint dataPoint: dataPoints) {
+                    for (WeatherDataPoint dataPoint : dataPoints) {
                         dataPoint.addUnits(dataKeyMap);
                         dataPoint.setDate(day.getValue());
                         datapoints.add(dataPoint);
                     }
                 }
-            }else{
+            } else {
                 System.out.println("that is not a valid id");
             }
-        }else{
+        } else {
             System.out.println("error null id");
         }
         return datapoints;
     }
 
     public static void printWeatherFromId(String locId) throws JsonProcessingException {
-        if(locId != null) {
-            Map<String, metResponse> metResponseMap = getMETResponseMap(locId);
-           if (metResponseMap.get("SiteRep").getDv().getLocation()!= null) {
-               List<DataForTime> dataForDays = metResponseMap.get("SiteRep").getDv().getLocation().getPeriod();
-               Map<String, DataKey> dataKeyMap = getDataKeyMap(metResponseMap);
-               for (DataForTime day : dataForDays) {
-                   System.out.println("----" + day.getValue() + "-----");
-                   List<WeatherDataPoint> dataPoints = day.getRep();
-                   for (WeatherDataPoint dp : dataPoints) {
-                       dp.setDate(day.getValue());
-                       dp.addUnits(dataKeyMap);
-                       printDataPoint(dp);
-                   }
-               }
-           }else{
-               System.out.println("that is not a valid id");
-           }
-        }else{
-            System.out.println("error null id");
+        List<WeatherDataPoint> dataPoints = getListOfWeatherDataPoints(locId);
+        for (WeatherDataPoint dp : dataPoints) {
+            System.out.println(dp.returnStringOfDataPoint());
         }
     }
 
     private static Map<String, metResponse> getMETResponseMap(String locId) throws JsonProcessingException {
-        String query= "?res=3hourly&key=";
+        String query = "?res=3hourly&key=";
         String fullURL = BASE_URL + locId + query + getAPIKey();
         String data = getData(fullURL);
         ObjectMapper objectMapper = new ObjectMapper();
 
-        return objectMapper.readValue(data, new TypeReference<Map<String, metResponse>>() {});
+        return objectMapper.readValue(data, new TypeReference<Map<String, metResponse>>() {
+        });
     }
 
     private static Map<String, DataKey> getDataKeyMap(Map<String, metResponse> weathermap) {
-        List<DataKey> dataKeyList= weathermap.get("SiteRep").getMetaData().get("Param");
-        Map<String,DataKey> dataKeyMap=new HashMap<>();
-        for(DataKey key :dataKeyList){
-            dataKeyMap.put(key.getName(),key);
+        List<DataKey> dataKeyList = weathermap.get("SiteRep").getMetaData().get("Param");
+        Map<String, DataKey> dataKeyMap = new HashMap<>();
+        for (DataKey key : dataKeyList) {
+            dataKeyMap.put(key.getName(), key);
         }
-        dataKeyMap.put("$",new DataKey("$","Mins", "Time"));
+        dataKeyMap.put("$", new DataKey("$", "Mins", "Time"));
         return dataKeyMap;
-    }
-
-
-    private static void printDataPoint(WeatherDataPoint datapoint){
-        System.out.println(datapoint.returnStringOfDataPoint());
     }
 
 
@@ -108,14 +97,13 @@ public class MetAPIReader {
             Map<String, Map<String, List<Location>>> mapLocs = objectMapper.readValue(data, new TypeReference<Map<String, Map<String, List<Location>>>>() {
             });
             locations = mapLocs.get("Locations").get("Location");
-        }
-        catch (JsonProcessingException e) {
+        } catch (JsonProcessingException e) {
             System.out.println("Critical: default locations could not be loaded.");
         }
         return locations;
     }
 
-    private static String getData(String fullURL){
+    private static String getData(String fullURL) {
         Client client = ClientBuilder.newBuilder().register(JacksonFeature.class).build();
         String data = client.target(fullURL)
                 .request(MediaType.TEXT_PLAIN)

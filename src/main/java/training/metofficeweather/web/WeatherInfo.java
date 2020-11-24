@@ -16,7 +16,7 @@ public class WeatherInfo {
 
     public void populateData(){
         try {
-            this.weatherData = MetAPIReader.returnWeatherFromId(locationId);
+            this.weatherData = MetAPIReader.getListOfWeatherDataPoints(locationId);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
