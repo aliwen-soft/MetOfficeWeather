@@ -26,24 +26,20 @@ public class MetAPIReader {
         printWeatherFromId(location.getId());
     }
 
-    public static List<String> returnWeatherFromId(String locId) throws JsonProcessingException {
+    public static List<WeatherDataPoint> returnWeatherFromId(String locId) throws JsonProcessingException {
         //todo this should return some sort of weather object that has sucess in it
-        List<String> datapoints=new ArrayList<>();
+        List<WeatherDataPoint> datapoints=new ArrayList<>();
         if(locId != null) {
             Map<String, metResponse> metResponseMap = getMETResponseMap(locId);
             if (metResponseMap.get("SiteRep").getDv().getLocation()!= null) {
                 List<DataForTime> dataForDays = metResponseMap.get("SiteRep").getDv().getLocation().getPeriod();
                 Map<String, DataKey> dataKeyMap = getDataKeyMap(metResponseMap);
                 for (DataForTime day : dataForDays) {
-                    List<WeatherDataPoint dataPoints = day.getRep();
-
-                    for (WeatherDataPoint : dataPoints) {
-                        String stringpoint="";
-                        //todo list data points
-                        for(String point: dp.keySet()){
-                            stringpoint = stringpoint +"\n"+ datapointToString(dp, dataKeyMap, point);
-                        }
-                        datapoints.add(stringpoint);
+                    List<WeatherDataPoint> dataPoints = day.getRep();
+                    for (WeatherDataPoint dataPoint: dataPoints) {
+                        dataPoint.addUnits(dataKeyMap);
+                        dataPoint.setDate(day.getValue());
+                        datapoints.add(dataPoint);
                     }
                 }
             }else{
@@ -63,9 +59,11 @@ public class MetAPIReader {
                Map<String, DataKey> dataKeyMap = getDataKeyMap(metResponseMap);
                for (DataForTime day : dataForDays) {
                    System.out.println("----" + day.getValue() + "-----");
-                   List<Map<String, String>> dataPoints = day.getRep();
-                   for (Map<String, String> dp : dataPoints) {
-                       printDataPoint(dp, dataKeyMap);
+                   List<WeatherDataPoint> dataPoints = day.getRep();
+                   for (WeatherDataPoint dp : dataPoints) {
+                       dp.setDate(day.getValue());
+                       dp.addUnits(dataKeyMap);
+                       printDataPoint(dp);
                    }
                }
            }else{
@@ -96,17 +94,10 @@ public class MetAPIReader {
     }
 
 
-    private static void printDataPoint(Map<String,String> datapoint, Map<String, DataKey> keys){
-        for(String dp: datapoint.keySet()){
-            System.out.println(datapointToString(datapoint, keys, dp));
-        }
+    private static void printDataPoint(WeatherDataPoint datapoint){
+        System.out.println(datapoint.returnStringOfDataPoint());
     }
 
-    private static String datapointToString(Map<String, String> datapoint, Map<String, DataKey> keys, String dp) {
-        DataKey key = keys.get(dp);
-        String decodedDataPoint= WeatherTypeDecoder.translateWeatherType(key.getDescription(), datapoint.get(dp));
-        return key.getDescription() + ": "+ decodedDataPoint+" "+ key.getUnits();
-    }
 
     public static List<Location> getLocations() {
         List<Location> locations = null;

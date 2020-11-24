@@ -16,12 +16,34 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>Data</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Weather Type</th>
+                        <th>Temperature</th>
+                        <th>Feels Like</th>
+                        <th>Wind Gust</th>
+                        <th>Wind Speed</th>
+                        <th>Wind Direction</th>
+                        <th>Relative Humidity</th>
+                        <th>Visibility</th>
+                        <th>Max UV</th>
+                        <th>Precipitation probability</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="Data : ${weatherInfo.weatherData}">
-                        <td th:text="${Data}"></td>
+                        <td th:text="${Data.date}"></td>
+                        <td th:text="${Data.time}"></td>
+                        <td th:text="${Data.weatherType}"></td>
+                        <td th:text="${Data.temperature}"></td>
+                        <td th:text="${Data.feelsLike}"></td>
+                        <td th:text="${Data.windGust}"></td>
+                        <td th:text="${Data.windSpeed}"></td>
+                        <td th:text="${Data.windDirection}"></td>
+                        <td th:text="${Data.relativeHumidity}"></td>
+                        <td th:text="${Data.visibility}"></td>
+                        <td th:text="${Data.maxUV}"></td>
+                        <td th:text="${Data.precipitationProbability}"></td>
                     </tr>
                     </tbody>
                 </table>

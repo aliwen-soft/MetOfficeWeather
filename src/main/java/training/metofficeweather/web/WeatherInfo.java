@@ -2,12 +2,13 @@ package training.metofficeweather.web;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import training.metofficeweather.MetAPIReader;
+import training.metofficeweather.WeatherDataPoint;
 
 import java.util.List;
 
 public class WeatherInfo {
     private final String locationId;
-    private List<String> weatherData;
+    private List<WeatherDataPoint> weatherData;
 
     public WeatherInfo(String locationId) {
         this.locationId = locationId;
@@ -21,7 +22,7 @@ public class WeatherInfo {
         }
     }
 
-    public List<String> getWeatherData() {
+    public List<WeatherDataPoint> getWeatherData() {
         return weatherData;
     }
 

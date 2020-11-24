@@ -53,11 +53,11 @@ public class WeatherTypeDecoder {
 
     }};
 
-    private static String getWeatherType(String type){
+    public static String getWeatherType(String type){
         return TYPE_MAP.get(type);
     }
 
-    private static String getVisibilityType(String type){
+    public static String getVisibilityType(String type){
         return VISIBILITY_MAP.get(type);
     }
 
