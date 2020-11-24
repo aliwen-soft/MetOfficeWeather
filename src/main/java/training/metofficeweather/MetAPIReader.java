@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.glassfish.jersey.jackson.JacksonFeature;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
@@ -43,8 +42,8 @@ public class MetAPIReader {
         List<WeatherDataPoint> datapoints = new ArrayList<>();
         if (locId != null) {
             Map<String, MetResponse> metResponseMap = getMETResponseMap(locId);
-            if (metResponseMap.get("SiteRep").getDv().getLocation() != null) {
-                List<DataForTime> dataForDays = metResponseMap.get("SiteRep").getDv().getLocation().getPeriod();
+            if (metResponseMap.get("SiteRep").getDataValues().getLocation() != null) {
+                List<DataForTime> dataForDays = metResponseMap.get("SiteRep").getDataValues().getLocation().getPeriod();
                 Map<String, DataKey> dataKeyMap = getDataKeyMap(metResponseMap);
                 for (DataForTime day : dataForDays) {
                     List<WeatherDataPoint> dataPoints = day.getRep();
