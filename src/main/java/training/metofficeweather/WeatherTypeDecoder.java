@@ -1,9 +1,8 @@
 package training.metofficeweather;
 
-import java.beans.Visibility;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
+
 
 public class WeatherTypeDecoder {
     private static Map<String,String> TYPE_MAP= new HashMap<String, String>() {{

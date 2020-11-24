@@ -12,6 +12,7 @@ public class DataAtLocation {
     private String country;
     private String continent;
     private String elevation;
+    @JsonProperty("Period")
     private List<DataForTime> period;
 
     public String getI() {
@@ -70,11 +71,10 @@ public class DataAtLocation {
         this.elevation = elevation;
     }
 
-    @JsonProperty("Period")
     public List<DataForTime> getPeriod() {
         return period;
     }
-    @JsonProperty("Period")
+
     public void setPeriod(List<DataForTime> period) {
         this.period = period;
     }

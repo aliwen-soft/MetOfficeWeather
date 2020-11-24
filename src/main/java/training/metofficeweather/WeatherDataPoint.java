@@ -5,16 +5,27 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Map;
 
 public class WeatherDataPoint {
+    @JsonProperty("D")
     private String windDirection;
+    @JsonProperty("F")
     private String feelsLike;
+    @JsonProperty("G")
     private String windGust;
+    @JsonProperty("H")
     private String relativeHumidity;
+    @JsonProperty("T")
     private String temperature;
+    @JsonProperty("V")
     private String visibility;
+    @JsonProperty("S")
     private String windSpeed;
+    @JsonProperty("U")
     private String maxUV;
+    @JsonProperty("W")
     private String weatherType;
+    @JsonProperty("Pp")
     private String precipitationProbability;
+    @JsonProperty("$")
     private String time;
 
     private String date;
@@ -69,112 +80,91 @@ public class WeatherDataPoint {
         return outputString;
     }
 
-    @JsonProperty("D")
+
     public String getWindDirection() {
         return windDirection;
     }
 
-    @JsonProperty("D")
     public void setWindDirection(String windDirection) {
         this.windDirection = windDirection;
     }
 
-    @JsonProperty("F")
     public String getFeelsLike() {
         return feelsLike;
     }
 
-    @JsonProperty("F")
     public void setFeelsLike(String feelsLike) {
         this.feelsLike = feelsLike;
     }
 
-    @JsonProperty("G")
     public String getWindGust() {
         return windGust;
     }
 
-    @JsonProperty("G")
     public void setWindGust(String windGust) {
         this.windGust = windGust;
     }
 
-    @JsonProperty("H")
     public String getRelativeHumidity() {
         return relativeHumidity;
     }
 
-    @JsonProperty("H")
     public void setRelativeHumidity(String relativeHumidity) {
         this.relativeHumidity = relativeHumidity;
     }
 
-    @JsonProperty("T")
     public String getTemperature() {
         return temperature;
     }
 
-    @JsonProperty("T")
     public void setTemperature(String temperature) {
         this.temperature = temperature;
     }
 
-    @JsonProperty("V")
     public String getVisibility() {
         return visibility;
     }
 
-    @JsonProperty("V")
     public void setVisibility(String visibility) {
     this.visibility = WeatherTypeDecoder.getVisibilityType(visibility);
     }
 
-    @JsonProperty("S")
     public String getWindSpeed() {
         return windSpeed;
     }
 
-    @JsonProperty("S")
     public void setWindSpeed(String windSpeed) {
         this.windSpeed = windSpeed;
     }
 
-    @JsonProperty("U")
     public String getMaxUV() {
         return maxUV;
     }
 
-    @JsonProperty("U")
     public void setMaxUV(String maxUV) {
         this.maxUV = maxUV;
     }
 
-    @JsonProperty("W")
     public String getWeatherType() {
         return weatherType;
     }
 
-    @JsonProperty("W")
     public void setWeatherType(String weatherType) {
         this.weatherType = WeatherTypeDecoder.getWeatherType(weatherType);
     }
 
-    @JsonProperty("Pp")
     public String getPrecipitationProbability() {
         return precipitationProbability;
     }
 
-    @JsonProperty("Pp")
     public void setPrecipitationProbability(String precipitationProbability) {
         this.precipitationProbability = precipitationProbability;
     }
 
-    @JsonProperty("$")
     public String getTime() {
         return time;
     }
 
-    @JsonProperty("$")
     public void setTime(String time) {
         this.time = time;
     }

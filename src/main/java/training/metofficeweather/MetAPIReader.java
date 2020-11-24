@@ -39,7 +39,7 @@ public class MetAPIReader {
     public static List<WeatherDataPoint> getListOfWeatherDataPoints(String locId) throws JsonProcessingException {
         List<WeatherDataPoint> datapoints = new ArrayList<>();
         if (locId != null) {
-            Map<String, metResponse> metResponseMap = getMETResponseMap(locId);
+            Map<String, MetResponse> metResponseMap = getMETResponseMap(locId);
             if (metResponseMap.get("SiteRep").getDv().getLocation() != null) {
                 List<DataForTime> dataForDays = metResponseMap.get("SiteRep").getDv().getLocation().getPeriod();
                 Map<String, DataKey> dataKeyMap = getDataKeyMap(metResponseMap);
@@ -67,17 +67,17 @@ public class MetAPIReader {
         }
     }
 
-    private static Map<String, metResponse> getMETResponseMap(String locId) throws JsonProcessingException {
+    private static Map<String, MetResponse> getMETResponseMap(String locId) throws JsonProcessingException {
         String query = "?res=3hourly&key=";
         String fullURL = BASE_URL + locId + query + getAPIKey();
         String data = getData(fullURL);
         ObjectMapper objectMapper = new ObjectMapper();
 
-        return objectMapper.readValue(data, new TypeReference<Map<String, metResponse>>() {
+        return objectMapper.readValue(data, new TypeReference<Map<String, MetResponse>>() {
         });
     }
 
-    private static Map<String, DataKey> getDataKeyMap(Map<String, metResponse> weathermap) {
+    private static Map<String, DataKey> getDataKeyMap(Map<String, MetResponse> weathermap) {
         List<DataKey> dataKeyList = weathermap.get("SiteRep").getMetaData().get("Param");
         Map<String, DataKey> dataKeyMap = new HashMap<>();
         for (DataKey key : dataKeyList) {
@@ -86,7 +86,6 @@ public class MetAPIReader {
         dataKeyMap.put("$", new DataKey("$", "Mins", "Time"));
         return dataKeyMap;
     }
-
 
     public static List<Location> getLocations() {
         List<Location> locations = null;

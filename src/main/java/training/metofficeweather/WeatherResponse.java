@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class WeatherResponse {
     private String dataDate;
     private String type;
+    @JsonProperty("Location")
     private DataAtLocation location;
 
     public String getDataDate() {
@@ -23,11 +24,10 @@ public class WeatherResponse {
         this.type = type;
     }
 
-    @JsonProperty("Location")
     public DataAtLocation getLocation() {
         return location;
     }
-    @JsonProperty("Location")
+
     public void setLocation(DataAtLocation location) {
         this.location = location;
     }
