@@ -8,7 +8,7 @@ import java.util.Map;
 public class DataForTime {
     private String type;
     private String value;
-    private List<Map<String,String>> rep;
+    private List<WeatherDataPoint> rep;
 
     public String getType() {
         return type;
@@ -27,11 +27,11 @@ public class DataForTime {
     }
 
     @JsonProperty("Rep")
-    public List<Map<String,String>> getRep() {
+    public List<WeatherDataPoint> getRep() {
         return rep;
     }
     @JsonProperty("Rep")
-    public void setRep(List<Map<String,String>> rep) {
+    public void setRep(List<WeatherDataPoint> rep) {
         this.rep = rep;
     }
 }

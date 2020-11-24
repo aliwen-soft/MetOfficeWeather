@@ -35,10 +35,11 @@ public class MetAPIReader {
                 List<DataForTime> dataForDays = metResponseMap.get("SiteRep").getDv().getLocation().getPeriod();
                 Map<String, DataKey> dataKeyMap = getDataKeyMap(metResponseMap);
                 for (DataForTime day : dataForDays) {
-                    List<Map<String, String>> dataPoints = day.getRep();
+                    List<WeatherDataPoint dataPoints = day.getRep();
 
-                    for (Map<String, String> dp : dataPoints) {
+                    for (WeatherDataPoint : dataPoints) {
                         String stringpoint="";
+                        //todo list data points
                         for(String point: dp.keySet()){
                             stringpoint = stringpoint +"\n"+ datapointToString(dp, dataKeyMap, point);
                         }
