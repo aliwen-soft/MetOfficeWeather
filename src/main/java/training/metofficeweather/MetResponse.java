@@ -11,7 +11,7 @@ import java.util.Map;
 @Setter
 public class MetResponse {
     @JsonProperty("Wx")
-    private Map<String, List<DataKey>> metaData;
+    private Map<String, List<WeatherCode>> metaData;
     @JsonProperty("DV")
     private WeatherResponse dataValues;
 }

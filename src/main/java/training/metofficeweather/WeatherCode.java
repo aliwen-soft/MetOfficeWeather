@@ -8,13 +8,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DataKey {
+public class WeatherCode {
     private String name;
     private String units;
     private String description;
 
     @JsonCreator
-    public DataKey(@JsonProperty("name") String name, @JsonProperty("units") String units, @JsonProperty("$") String description) {
+    public WeatherCode(@JsonProperty("name") String name, @JsonProperty("units") String units, @JsonProperty("$") String description) {
         this.name = name;
         this.units = units;
         this.description = description;

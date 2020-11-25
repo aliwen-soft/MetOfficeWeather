@@ -33,7 +33,7 @@ public class WeatherDataPoint {
     private String time;
 
     private String date;
-    private boolean units = false;
+    private boolean hasUnits = false;
 
     public void setDate(String date) {
         if(date.endsWith("Z")) {
@@ -44,8 +44,8 @@ public class WeatherDataPoint {
     }
 
 
-    public void addUnits(Map<String, DataKey> metaData){
-        if(units==false){
+    public void addUnits(Map<String, WeatherCode> metaData){
+        if(hasUnits ==false){
             this.windDirection =this.windDirection+ metaData.get("D").getUnits();
             this.feelsLike =this.feelsLike+ metaData.get("F").getUnits();
             this.windGust =this.windGust+ metaData.get("G").getUnits();
@@ -55,7 +55,7 @@ public class WeatherDataPoint {
             this.maxUV =this.maxUV+ metaData.get("U").getUnits();
             this.precipitationProbability =this.precipitationProbability+ metaData.get("Pp").getUnits();
             this.time =this.time+ metaData.get("$").getUnits();
-            units= true;
+            hasUnits = true;
         }
     }
 

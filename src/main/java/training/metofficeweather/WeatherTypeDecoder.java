@@ -5,7 +5,7 @@ import java.util.Map;
 
 
 public class WeatherTypeDecoder {
-    private static Map<String,String> TYPE_MAP= new HashMap<String, String>() {{
+    private static final Map<String,String> TYPE_MAP= new HashMap<String, String>() {{
         put("NA", "Not available");
         put("0", "Clear night");
         put("1", "Sunny day");
@@ -41,7 +41,7 @@ public class WeatherTypeDecoder {
 
 
     }};
-    private static Map<String,String> VISIBILITY_MAP= new HashMap<String, String>() {{
+    private static final Map<String,String> VISIBILITY_MAP= new HashMap<String, String>() {{
         put("UN", "Unknown");
         put("VP", "Very poor - Less than 1 km");
         put("PO", "Poor - Between 1-4 km");

@@ -43,7 +43,7 @@ public class MetAPIReader {
             MetResponse metResponse = getMETResponse(locId);
             if (metResponse.getDataValues().getLocation() != null) {
                 List<DataForTime> dataForDays = metResponse.getDataValues().getLocation().getPeriod();
-                Map<String, DataKey> dataKeyMap = getDataKeyMap(metResponse);
+                Map<String, WeatherCode> dataKeyMap = getDataKeyMap(metResponse);
                 for (DataForTime day : dataForDays) {
                     List<WeatherDataPoint> dataPoints = day.getWeatherDataPoints();
                     for (WeatherDataPoint dataPoint : dataPoints) {
@@ -79,14 +79,14 @@ public class MetAPIReader {
         return metResponseMap.getSiteResponse();
     }
 
-    private static Map<String, DataKey> getDataKeyMap(MetResponse metResponse) {
-        List<DataKey> dataKeyList = metResponse.getMetaData().get("Param");
-        Map<String, DataKey> dataKeyMap = new HashMap<>();
-        for (DataKey key : dataKeyList) {
-            dataKeyMap.put(key.getName(), key);
+    private static Map<String, WeatherCode> getDataKeyMap(MetResponse metResponse) {
+        List<WeatherCode> weatherCodeList = metResponse.getMetaData().get("Param");
+        Map<String, WeatherCode> weatherCodeMap = new HashMap<>();
+        for (WeatherCode weatherCode : weatherCodeList) {
+            weatherCodeMap.put(weatherCode.getName(), weatherCode);
         }
-        dataKeyMap.put("$", new DataKey("$", "Mins", "Time"));
-        return dataKeyMap;
+        weatherCodeMap.putIfAbsent("$", new WeatherCode("$", "Mins", "Time"));
+        return weatherCodeMap;
     }
 
     public static List<Location> getLocations() {
