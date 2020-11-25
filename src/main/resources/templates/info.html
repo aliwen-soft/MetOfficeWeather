@@ -13,6 +13,7 @@
             <h2>Weather Information</h2>
             <div>
                 <p>You entered location id <span th:text="${weatherInfo.locationId}"></span></p>
+
                 <table class="table table-striped">
                     <thead>
                     <tr>
@@ -39,7 +40,7 @@
                         <td th:text="${Data.feelsLike}"></td>
                         <td th:text="${Data.windGust}"></td>
                         <td th:text="${Data.windSpeed}"></td>
-                        <td th:text="${Data.windDirection}"></td>
+                        <td> <img th:class="rotate+${Data.windDirection}" src="../../imgs/arrow.png" height=40 width=40></td>
                         <td th:text="${Data.relativeHumidity}"></td>
                         <td th:text="${Data.visibility}"></td>
                         <td th:text="${Data.maxUV}"></td>
