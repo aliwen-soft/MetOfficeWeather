@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout">
+
 <head>
     <title>Home page</title>
 </head>
@@ -23,7 +24,9 @@
             <form id="nameform" th:action="@{/weatherInfo}" method="get">
                 <fieldset>
                     <legend>Location DropDowList: </legend>
-                    <input type="text" name="location">
+                    <select name="location" id="locationinfo">
+                        <option th:each="location : ${locationInfo.locationList}"  th:value="${location.id}" th:text="${location.name}"></option>
+                    </select>
                     <input type="submit" value="Get Weather Info" />
                 </fieldset>
             </form>
