@@ -32,13 +32,13 @@ public class MetAPIReader {
         return location;
     }
 
-    public static List<WeatherDataPoint> getListOfWeatherDataPointsFromName(String locName) throws JsonProcessingException {
+    public static List<List<WeatherDataPoint>> getListOfWeatherDataPointsFromNameByDay(String locName) throws JsonProcessingException {
         Location location = getLocationFromName(locName);
-        return getListOfWeatherDataPoints(location.getId());
+        return getListOfWeatherDataPointsByDay(location.getId());
     }
 
-    public static List<WeatherDataPoint> getListOfWeatherDataPoints(String locId) throws JsonProcessingException {
-        List<WeatherDataPoint> weatherDataPoints = new ArrayList<>();
+    public static List<List<WeatherDataPoint>> getListOfWeatherDataPointsByDay(String locId) throws JsonProcessingException {
+        List<List<WeatherDataPoint>> weatherDataPointsByDay = new ArrayList<>();
         if (locId != null) {
             MetResponse metResponse = getMETResponse(locId);
             if (metResponse.getDataValues().getLocation() != null) {
@@ -49,8 +49,8 @@ public class MetAPIReader {
                     for (WeatherDataPoint dataPoint : dataPoints) {
                         dataPoint.addUnits(dataKeyMap);
                         dataPoint.setDate(day.getValue());
-                        weatherDataPoints.add(dataPoint);
                     }
+                    weatherDataPointsByDay.add(dataPoints);
                 }
             } else {
                 System.out.println("that is not a valid id");
@@ -58,13 +58,15 @@ public class MetAPIReader {
         } else {
             System.out.println("error null id");
         }
-        return weatherDataPoints;
+        return weatherDataPointsByDay;
     }
 
     public static void printWeatherFromId(String locId) throws JsonProcessingException {
-        List<WeatherDataPoint> dataPoints = getListOfWeatherDataPoints(locId);
-        for (WeatherDataPoint dp : dataPoints) {
-            System.out.println(dp.returnStringOfDataPoint());
+        List<List<WeatherDataPoint>> dataPointsbyday = getListOfWeatherDataPointsByDay(locId);
+        for(List<WeatherDataPoint> dataPoints: dataPointsbyday){
+            for (WeatherDataPoint dp : dataPoints) {
+                System.out.println(dp.returnStringOfDataPoint());
+            }
         }
     }
 

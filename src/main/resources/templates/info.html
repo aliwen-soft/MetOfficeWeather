@@ -13,7 +13,7 @@
             <h2>Weather Information</h2>
             <div>
                 <p>You entered location id <span th:text="${weatherInfo.locationId}"></span></p>
-                <table class="table table-striped">
+                <table th:each="weatherData : ${weatherInfo.weatherDataByDay}" class="table table-striped">
                     <thead>
                     <tr>
                         <th>Date</th>
@@ -31,20 +31,20 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="Data : ${weatherInfo.weatherData}">
-                        <td th:text="${Data.date}"></td>
-                        <td th:text="${Data.time}"></td>
-                        <td th:text="${Data.weatherType}"></td>
-                        <td th:text="${Data.temperature}"></td>
-                        <td th:text="${Data.feelsLike}"></td>
-                        <td th:text="${Data.windGust}"></td>
-                        <td th:text="${Data.windSpeed}"></td>
-                        <td th:text="${Data.windDirection}"></td>
-                        <td th:text="${Data.relativeHumidity}"></td>
-                        <td th:text="${Data.visibility}"></td>
-                        <td th:text="${Data.maxUV}"></td>
-                        <td th:text="${Data.precipitationProbability}"></td>
-                    </tr>
+                        <tr th:each="Data : ${weatherData}">
+                            <td th:text="${Data.date}"></td>
+                            <td th:text="${Data.time}"></td>
+                            <td th:text="${Data.weatherType}"></td>
+                            <td th:text="${Data.temperature}"></td>
+                            <td th:text="${Data.feelsLike}"></td>
+                            <td th:text="${Data.windGust}"></td>
+                            <td th:text="${Data.windSpeed}"></td>
+                            <td th:text="${Data.windDirection}"></td>
+                            <td th:text="${Data.relativeHumidity}"></td>
+                            <td th:text="${Data.visibility}"></td>
+                            <td th:text="${Data.maxUV}"></td>
+                            <td th:text="${Data.precipitationProbability}"></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
