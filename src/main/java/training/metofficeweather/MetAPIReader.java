@@ -24,7 +24,7 @@ public class MetAPIReader {
         printWeatherFromId(location.getId());
     }
 
-    private static Location getLocationFromName(String locName) {
+    public static Location getLocationFromName(String locName) {
         Location location = DEFAULT_LOCATIONS.stream()
                 .filter(loc -> locName.equals(loc.getName()))
                 .findAny()
