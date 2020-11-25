@@ -6,9 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class WeatherResponse {
-    private String dataDate;
-    private String type;
-    @JsonProperty("Location")
-    private DataAtLocation location;
+public class LocationSiteResponse {
+    @JsonProperty("Locations")
+    private LocationListResponse locations;
 }

@@ -61,8 +61,7 @@ public class WeatherCLI {
         try {
             Integer.parseInt(command);
             return true;
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return false;
         }
     }
@@ -82,8 +81,7 @@ public class WeatherCLI {
     private static void runNumberCommand(String command) {
         try {
             MetAPIReader.printWeatherFromId(command);
-        }
-        catch (JsonProcessingException e) {
+        } catch (JsonProcessingException e) {
             System.out.println("Error processing JSON information.");
         }
     }
@@ -91,8 +89,7 @@ public class WeatherCLI {
     private static void runStationNameCommand(String command) {
         try {
             MetAPIReader.printWeatherFromName(command);
-        }
-        catch (JsonProcessingException e) {
+        } catch (JsonProcessingException e) {
             System.out.println("Error processing JSON information.");
         }
     }

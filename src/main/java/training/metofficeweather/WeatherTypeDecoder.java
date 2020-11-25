@@ -1,12 +1,11 @@
 package training.metofficeweather;
 
-import java.beans.Visibility;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
+
 
 public class WeatherTypeDecoder {
-    private static Map<String,String> TYPE_MAP= new HashMap<String, String>() {{
+    private static final Map<String,String> TYPE_MAP= new HashMap<String, String>() {{
         put("NA", "Not available");
         put("0", "Clear night");
         put("1", "Sunny day");
@@ -42,7 +41,7 @@ public class WeatherTypeDecoder {
 
 
     }};
-    private static Map<String,String> VISIBILITY_MAP= new HashMap<String, String>() {{
+    private static final Map<String,String> VISIBILITY_MAP= new HashMap<String, String>() {{
         put("UN", "Unknown");
         put("VP", "Very poor - Less than 1 km");
         put("PO", "Poor - Between 1-4 km");
@@ -53,11 +52,11 @@ public class WeatherTypeDecoder {
 
     }};
 
-    private static String getWeatherType(String type){
+    public static String getWeatherType(String type){
         return TYPE_MAP.get(type);
     }
 
-    private static String getVisibilityType(String type){
+    public static String getVisibilityType(String type){
         return VISIBILITY_MAP.get(type);
     }
 

@@ -18,7 +18,9 @@ public class Website {
 
     @RequestMapping("/weatherInfo")
     ModelAndView weatherInfo(@RequestParam("locationId") String locationId) {
-        return new ModelAndView("info", "weatherInfo", new WeatherInfo(locationId)) ;
+        WeatherInfo weatherInfo = new WeatherInfo(locationId);
+        weatherInfo.populateData();
+        return new ModelAndView("info", "weatherInfo", weatherInfo) ;
     }
 
     public static void main(String[] args) throws Exception {
