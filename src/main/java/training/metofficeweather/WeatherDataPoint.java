@@ -1,9 +1,13 @@
 package training.metofficeweather;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Map;
 
+@Getter
+@Setter
 public class WeatherDataPoint {
     @JsonProperty("D")
     private String windDirection;
@@ -80,92 +84,4 @@ public class WeatherDataPoint {
         return outputString;
     }
 
-
-    public String getWindDirection() {
-        return windDirection;
-    }
-
-    public void setWindDirection(String windDirection) {
-        this.windDirection = windDirection;
-    }
-
-    public String getFeelsLike() {
-        return feelsLike;
-    }
-
-    public void setFeelsLike(String feelsLike) {
-        this.feelsLike = feelsLike;
-    }
-
-    public String getWindGust() {
-        return windGust;
-    }
-
-    public void setWindGust(String windGust) {
-        this.windGust = windGust;
-    }
-
-    public String getRelativeHumidity() {
-        return relativeHumidity;
-    }
-
-    public void setRelativeHumidity(String relativeHumidity) {
-        this.relativeHumidity = relativeHumidity;
-    }
-
-    public String getTemperature() {
-        return temperature;
-    }
-
-    public void setTemperature(String temperature) {
-        this.temperature = temperature;
-    }
-
-    public String getVisibility() {
-        return visibility;
-    }
-
-    public void setVisibility(String visibility) {
-    this.visibility = WeatherTypeDecoder.getVisibilityType(visibility);
-    }
-
-    public String getWindSpeed() {
-        return windSpeed;
-    }
-
-    public void setWindSpeed(String windSpeed) {
-        this.windSpeed = windSpeed;
-    }
-
-    public String getMaxUV() {
-        return maxUV;
-    }
-
-    public void setMaxUV(String maxUV) {
-        this.maxUV = maxUV;
-    }
-
-    public String getWeatherType() {
-        return weatherType;
-    }
-
-    public void setWeatherType(String weatherType) {
-        this.weatherType = WeatherTypeDecoder.getWeatherType(weatherType);
-    }
-
-    public String getPrecipitationProbability() {
-        return precipitationProbability;
-    }
-
-    public void setPrecipitationProbability(String precipitationProbability) {
-        this.precipitationProbability = precipitationProbability;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
 }

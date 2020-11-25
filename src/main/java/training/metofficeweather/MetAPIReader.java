@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 public class MetAPIReader {
     public static final List<Location> DEFAULT_LOCATIONS = getLocations();
 
