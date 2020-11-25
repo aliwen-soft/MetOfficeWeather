@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class WeatherTypeDecoder {
-    private static final Map<String,String> TYPE_MAP= new HashMap<String, String>() {{
+public class WeatherDecoder {
+    private static final Map<String, String> TYPE_MAP = new HashMap<String, String>() {{
         put("NA", "Not available");
         put("0", "Clear night");
         put("1", "Sunny day");
@@ -41,7 +41,7 @@ public class WeatherTypeDecoder {
 
 
     }};
-    private static final Map<String,String> VISIBILITY_MAP= new HashMap<String, String>() {{
+    private static final Map<String, String> VISIBILITY_MAP = new HashMap<String, String>() {{
         put("UN", "Unknown");
         put("VP", "Very poor - Less than 1 km");
         put("PO", "Poor - Between 1-4 km");
@@ -52,20 +52,23 @@ public class WeatherTypeDecoder {
 
     }};
 
-    public static String getWeatherType(String type){
+    private WeatherDecoder() {
+    }
+
+    public static String getWeatherType(String type) {
         return TYPE_MAP.get(type);
     }
 
-    public static String getVisibilityType(String type){
+    public static String getVisibilityType(String type) {
         return VISIBILITY_MAP.get(type);
     }
 
-    public static String translateWeatherType(String name, String result){
-        if (name.equals("Weather Type")){
+    public static String translateWeatherType(String name, String result) {
+        if (name.equals("Weather Type")) {
             return getWeatherType(result);
-        }else if(name.equals("Visibility")){
+        } else if (name.equals("Visibility")) {
             return getVisibilityType(result);
-        }else{
+        } else {
             return result;
         }
     }
