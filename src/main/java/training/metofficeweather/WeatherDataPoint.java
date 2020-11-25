@@ -35,21 +35,14 @@ public class WeatherDataPoint {
     private String date;
     private boolean units = false;
 
-    public String getDate() {
-        return date;
-    }
-
     public void setDate(String date) {
-        this.date = date;
+        if(date.endsWith("Z")) {
+            this.date = date.substring(0, date.length() - 1);
+        }else{
+            this.date=date;
+        }
     }
 
-    public boolean isUnits() {
-        return units;
-    }
-
-    public void setUnits(boolean units) {
-        this.units = units;
-    }
 
     public void addUnits(Map<String, DataKey> metaData){
         if(units==false){

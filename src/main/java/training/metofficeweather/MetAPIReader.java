@@ -3,7 +3,6 @@ package training.metofficeweather;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.glassfish.jersey.jackson.JacksonFeature;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
@@ -11,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 public class MetAPIReader {
     public static final List<Location> DEFAULT_LOCATIONS = getLocations();
@@ -47,7 +45,7 @@ public class MetAPIReader {
                 List<DataForTime> dataForDays = metResponse.getDataValues().getLocation().getPeriod();
                 Map<String, DataKey> dataKeyMap = getDataKeyMap(metResponse);
                 for (DataForTime day : dataForDays) {
-                    List<WeatherDataPoint> dataPoints = day.getRep();
+                    List<WeatherDataPoint> dataPoints = day.getWeatherDataPoints();
                     for (WeatherDataPoint dataPoint : dataPoints) {
                         dataPoint.addUnits(dataKeyMap);
                         dataPoint.setDate(day.getValue());

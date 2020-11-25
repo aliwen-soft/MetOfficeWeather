@@ -11,5 +11,5 @@ public class DataForTime {
     private String type;
     private String value;
     @JsonProperty("Rep")
-    private List<WeatherDataPoint> rep;
+    private List<WeatherDataPoint> weatherDataPoints;
 }
