@@ -2,7 +2,6 @@ package training.metofficeweather.web;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.Getter;
-import lombok.Setter;
 import training.metofficeweather.MetAPIReader;
 import training.metofficeweather.WeatherDataPoint;
 
@@ -11,7 +10,7 @@ import java.util.List;
 @Getter
 public class WeatherInfo {
     private final String locationId;
-    private List<WeatherDataPoint> weatherData;
+    private List<List<WeatherDataPoint>> weatherDataByDay;
 
     public WeatherInfo(String locationId) {
         this.locationId = locationId;
@@ -19,7 +18,7 @@ public class WeatherInfo {
 
     public void populateData(){
         try {
-            this.weatherData = MetAPIReader.getListOfWeatherDataPoints(locationId);
+            this.weatherDataByDay = MetAPIReader.getListOfWeatherDataPointsByDay(locationId);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
