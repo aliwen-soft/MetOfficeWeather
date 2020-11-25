@@ -35,14 +35,6 @@ public class WeatherDataPoint {
     private String date;
     private boolean hasUnits = false;
 
-    public void setDate(String date) {
-        if(date.endsWith("Z")) {
-            this.date = date.substring(0, date.length() - 1);
-        }else{
-            this.date=date;
-        }
-    }
-
     public void setVisibility(String visibility) {
         this.visibility = WeatherDecoder.getVisibilityType(visibility);
     }

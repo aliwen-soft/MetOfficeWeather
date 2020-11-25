@@ -31,7 +31,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="Data : ${weatherInfo.weatherData}">
+                    <tr th:each="Data : ${weatherData.weatherDataPoints}">
                         <td th:text="${Data.date}"></td>
                         <td th:text="${Data.time}"></td>
                         <td th:text="${Data.weatherType}"></td>
