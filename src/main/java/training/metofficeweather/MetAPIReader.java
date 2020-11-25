@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.glassfish.jersey.jackson.JacksonFeature;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
@@ -40,18 +41,18 @@ public class MetAPIReader {
     }
 
     public static List<WeatherDataPoint> getListOfWeatherDataPoints(String locId) throws JsonProcessingException {
-        List<WeatherDataPoint> datapoints = new ArrayList<>();
+        List<WeatherDataPoint> weatherDataPoints = new ArrayList<>();
         if (locId != null) {
-            Map<String, MetResponse> metResponseMap = getMETResponseMap(locId);
-            if (metResponseMap.get("SiteRep").getDataValues().getLocation() != null) {
-                List<DataForTime> dataForDays = metResponseMap.get("SiteRep").getDataValues().getLocation().getPeriod();
-                Map<String, DataKey> dataKeyMap = getDataKeyMap(metResponseMap);
+            MetResponse metResponse = getMETResponse(locId);
+            if (metResponse.getDataValues().getLocation() != null) {
+                List<DataForTime> dataForDays = metResponse.getDataValues().getLocation().getPeriod();
+                Map<String, DataKey> dataKeyMap = getDataKeyMap(metResponse);
                 for (DataForTime day : dataForDays) {
                     List<WeatherDataPoint> dataPoints = day.getRep();
                     for (WeatherDataPoint dataPoint : dataPoints) {
                         dataPoint.addUnits(dataKeyMap);
                         dataPoint.setDate(day.getValue());
-                        datapoints.add(dataPoint);
+                        weatherDataPoints.add(dataPoint);
                     }
                 }
             } else {
@@ -60,7 +61,7 @@ public class MetAPIReader {
         } else {
             System.out.println("error null id");
         }
-        return datapoints;
+        return weatherDataPoints;
     }
 
     public static void printWeatherFromId(String locId) throws JsonProcessingException {
@@ -70,18 +71,19 @@ public class MetAPIReader {
         }
     }
 
-    private static Map<String, MetResponse> getMETResponseMap(String locId) throws JsonProcessingException {
+    private static MetResponse getMETResponse(String locId) throws JsonProcessingException {
         String query = "?res=3hourly&key=";
         String fullURL = BASE_URL + locId + query + getAPIKey();
         String data = getData(fullURL);
         ObjectMapper objectMapper = new ObjectMapper();
 
-        return objectMapper.readValue(data, new TypeReference<Map<String, MetResponse>>() {
-        });
+        SiteResponse metResponseMap = objectMapper.readValue(data, SiteResponse.class);
+
+        return metResponseMap.getSiteResponse();
     }
 
-    private static Map<String, DataKey> getDataKeyMap(Map<String, MetResponse> weathermap) {
-        List<DataKey> dataKeyList = weathermap.get("SiteRep").getMetaData().get("Param");
+    private static Map<String, DataKey> getDataKeyMap(MetResponse metResponse) {
+        List<DataKey> dataKeyList = metResponse.getMetaData().get("Param");
         Map<String, DataKey> dataKeyMap = new HashMap<>();
         for (DataKey key : dataKeyList) {
             dataKeyMap.put(key.getName(), key);
@@ -96,10 +98,10 @@ public class MetAPIReader {
             String fullURL = BASE_URL + "sitelist" + "?key=" + getAPIKey();
             String data = getData(fullURL);
             ObjectMapper objectMapper = new ObjectMapper();
-            Map<String, Map<String, List<Location>>> mapLocs = objectMapper.readValue(data, new TypeReference<Map<String, Map<String, List<Location>>>>() {
-            });
-            locations = mapLocs.get("Locations").get("Location");
+            LocationSiteResponse mapLocs = objectMapper.readValue(data,LocationSiteResponse.class);
+            locations = mapLocs.getLocations().getLocations();
         } catch (JsonProcessingException e) {
+            e.printStackTrace();
             System.out.println("Critical: default locations could not be loaded.");
         }
         return locations;
