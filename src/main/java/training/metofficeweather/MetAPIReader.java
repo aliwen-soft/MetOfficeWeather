@@ -19,52 +19,52 @@ public class MetAPIReader {
     private MetAPIReader() {
     }
 
-    public static void printWeatherFromName(String locName) throws JsonProcessingException {
+    public static void printWeatherFromName(String locName) throws JsonProcessingException, InvalidIDException, InvalidLocNameException {
         Location location = getLocationFromName(locName);
         printWeatherFromId(location.getId());
     }
 
-    public static Location getLocationFromName(String locName) {
+    public static Location getLocationFromName(String locName) throws InvalidLocNameException {
         Location location = DEFAULT_LOCATIONS.stream()
                 .filter(loc -> locName.equals(loc.getName()))
                 .findAny()
                 .orElse(null);
+        if (location ==null){
+            throw new InvalidLocNameException(locName+" Is Not a Valid Location Name");
+        }
         return location;
     }
 
-    public static List<DataForDay> getListOfWeatherDataPointsFromNameByDay(String locName) throws JsonProcessingException {
+    public static List<DataForDay> getListOfWeatherDataPointsFromNameByDay(String locName) throws JsonProcessingException, InvalidIDException, InvalidLocNameException {
         Location location = getLocationFromName(locName);
         return getListOfWeatherDataPointsByDay(location.getId());
     }
 
-    public static List<DataForDay> getListOfWeatherDataPointsByDay(String locId) throws JsonProcessingException {
+    public static List<DataForDay> getListOfWeatherDataPointsByDay(String locId) throws JsonProcessingException, InvalidIDException {
         List<DataForDay> dataForDays = new ArrayList<>();
-        if (locId != null) {
-            MetResponse metResponse = getMETResponse(locId);
-            if (metResponse.getDataValues().getLocation() != null) {
-                Map<String, WeatherCode> dataKeyMap = getDataKeyMap(metResponse);
-                dataForDays = metResponse.getDataValues().getLocation().getPeriod();
-                for (DataForDay day : dataForDays) {
-                    day.setDayOfTheWeek();
-                    List<WeatherDataPoint> dataPoints = day.getWeatherDataPoints();
-                    for (WeatherDataPoint dataPoint : dataPoints) {
-                        dataPoint.addUnits(dataKeyMap);
-                        dataPoint.setDate(day.getTimeValue());
-                    }
+        MetResponse metResponse = getMETResponse(locId);
+        if (metResponse.getDataValues().getLocation() != null) {
+            Map<String, WeatherCode> dataKeyMap = getDataKeyMap(metResponse);
+            dataForDays = metResponse.getDataValues().getLocation().getPeriod();
+            for (DataForDay day : dataForDays) {
+                day.setDayOfTheWeek();
+                List<WeatherDataPoint> dataPoints = day.getWeatherDataPoints();
+                for (WeatherDataPoint dataPoint : dataPoints) {
+                    dataPoint.addUnits(dataKeyMap);
+                    dataPoint.setDate(day.getTimeValue());
                 }
-            } else {
-                System.out.println("that is not a valid id");
             }
         } else {
-            System.out.println("error null id");
+            throw new InvalidIDException(locId + " is not a valid ID");
         }
+
         return dataForDays;
     }
 
-    public static void printWeatherFromId(String locId) throws JsonProcessingException {
+    public static void printWeatherFromId(String locId) throws JsonProcessingException, InvalidIDException {
         List<DataForDay> dataPointsbyday = getListOfWeatherDataPointsByDay(locId);
-        for(DataForDay day: dataPointsbyday){
-            List<WeatherDataPoint> dataPoints=day.getWeatherDataPoints();
+        for (DataForDay day : dataPointsbyday) {
+            List<WeatherDataPoint> dataPoints = day.getWeatherDataPoints();
             for (WeatherDataPoint dp : dataPoints) {
                 System.out.println(dp.returnStringOfDataPoint());
             }
@@ -98,7 +98,7 @@ public class MetAPIReader {
             String fullURL = BASE_URL + "sitelist" + "?key=" + getAPIKey();
             String data = getData(fullURL);
             ObjectMapper objectMapper = new ObjectMapper();
-            LocationSiteResponse locationSiteResponse = objectMapper.readValue(data,LocationSiteResponse.class);
+            LocationSiteResponse locationSiteResponse = objectMapper.readValue(data, LocationSiteResponse.class);
             locations = locationSiteResponse.getLocations().getLocationList();
         } catch (JsonProcessingException e) {
             System.out.println("Critical: default locations could not be loaded.");

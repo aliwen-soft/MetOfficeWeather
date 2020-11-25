@@ -83,6 +83,8 @@ public class WeatherCLI {
             MetAPIReader.printWeatherFromId(command);
         } catch (JsonProcessingException e) {
             System.out.println("Error processing JSON information.");
+        } catch (InvalidIDException invalidIDException) {
+            System.out.println(invalidIDException.getMessage());
         }
     }
 
@@ -91,6 +93,10 @@ public class WeatherCLI {
             MetAPIReader.printWeatherFromName(command);
         } catch (JsonProcessingException e) {
             System.out.println("Error processing JSON information.");
+        } catch (InvalidIDException invalidIDException) {
+            System.out.println(invalidIDException.getMessage());
+        } catch (InvalidLocNameException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

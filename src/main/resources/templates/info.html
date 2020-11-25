@@ -10,6 +10,10 @@
     </head>
     <body>
         <div layout:fragment="content" class="container body-content">
+            <div th:if="${weatherInfo.hasError != ''}" >
+                <div class="alert alert-danger" role="alert"  th:text="${weatherInfo.hasError}">  </div>
+            </div>
+            <div th:if="${weatherInfo.hasError == ''}" >
             <h2>Weather Information</h2>
             <div>
                 <p>You entered location id <span th:text="${weatherInfo.locationId}"></span></p>
@@ -47,6 +51,7 @@
                     </tr>
                     </tbody>
                 </table>
+            </div>
             </div>
         </div>
     </body>

@@ -11,7 +11,10 @@ public class WeatherInfo {
     private final String locationId;
     private List<DataForDay> weatherDataByDay;
 
+    private String hasError = "";
+
     public WeatherInfo(String location) {
+        String locationId1;
         boolean isId;
         try {
             Integer.parseInt(location);
@@ -19,20 +22,30 @@ public class WeatherInfo {
         } catch (NumberFormatException e) {
             isId= false;
         }
-
         if (isId) {
-            this.locationId = location;
+            locationId1 = location;
         }else{
-            Location loc = MetAPIReader.getLocationFromName(location);
-            this.locationId = loc.getId();
+            try {
+                Location loc = MetAPIReader.getLocationFromName(location);
+                locationId1 = loc.getId();
+            } catch (InvalidLocNameException e) {
+                locationId1 =null;
+                hasError=e.getMessage();
+            }
+
         }
+        this.locationId = locationId1;
     }
 
     public void populateData(){
         try {
-            this.weatherDataByDay = MetAPIReader.getListOfWeatherDataPointsByDay(locationId);
+            if(hasError.equals("")) {
+                this.weatherDataByDay = MetAPIReader.getListOfWeatherDataPointsByDay(locationId);
+            }
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            hasError = e.getMessage();
+        } catch (InvalidIDException invalidIDException) {
+            hasError = invalidIDException.getMessage();
         }
     }
 
