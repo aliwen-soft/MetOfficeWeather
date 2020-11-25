@@ -1,0 +1,127 @@
+.rotateN{
+  -webkit-transform:rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+}
+
+.rotateNNE {
+  -webkit-transform:rotate(22deg);
+  -moz-transform: rotate(22deg);
+  -ms-transform: rotate(22deg);
+  -o-transform: rotate(22deg);
+  transform: rotate(22deg);
+}
+
+.rotateNE {
+  -webkit-transform:rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.rotateNEE {
+  -webkit-transform:rotate(67deg);
+  -moz-transform: rotate(67deg);
+  -ms-transform: rotate(67deg);
+  -o-transform: rotate(67deg);
+  transform: rotate(67deg);
+}
+
+.rotateE {
+  -webkit-transform:rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.rotateSEE {
+  -webkit-transform:rotate(112deg);
+  -moz-transform: rotate(112deg);
+  -ms-transform: rotate(112deg);
+  -o-transform: rotate(112deg);
+  transform: rotate(112deg);
+}
+
+.rotateSE {
+  -webkit-transform:rotate(135deg);
+  -moz-transform: rotate(135deg);
+  -ms-transform: rotate(135deg);
+  -o-transform: rotate(135deg);
+  transform: rotate(135deg);
+}
+
+.rotateSSE {
+  -webkit-transform:rotate(157deg);
+  -moz-transform: rotate(157deg);
+  -ms-transform: rotate(157deg);
+  -o-transform: rotate(157deg);
+  transform: rotate(157deg);
+}
+
+.rotateS {
+  -webkit-transform:rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+.rotateSSW {
+  -webkit-transform:rotate(202deg);
+  -moz-transform: rotate(202deg);
+  -ms-transform: rotate(202deg);
+  -o-transform: rotate(202deg);
+  transform: rotate(202deg);
+}
+
+.rotateSW {
+  -webkit-transform:rotate(225deg);
+  -moz-transform: rotate(225deg);
+  -ms-transform: rotate(225deg);
+  -o-transform: rotate(225deg);
+  transform: rotate(225deg);
+}
+
+.rotateSWW {
+  -webkit-transform:rotate(247deg);
+  -moz-transform: rotate(247deg);
+  -ms-transform: rotate(247deg);
+  -o-transform: rotate(247deg);
+  transform: rotate(247deg);
+}
+
+.rotateW {
+  -webkit-transform:rotate(270deg);
+  -moz-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  transform: rotate(270deg);
+}
+
+.rotateNWW {
+  -webkit-transform:rotate(292deg);
+  -moz-transform: rotate(292deg);
+  -ms-transform: rotate(292deg);
+  -o-transform: rotate(292deg);
+  transform: rotate(292deg);
+}
+
+.rotateNW {
+  -webkit-transform:rotate(315deg);
+  -moz-transform: rotate(315deg);
+  -ms-transform: rotate(315deg);
+  -o-transform: rotate(315deg);
+  transform: rotate(315deg);
+}
+
+.rotateNNW {
+  -webkit-transform:rotate(337deg);
+  -moz-transform: rotate(337deg);
+  -ms-transform: rotate(337deg);
+  -o-transform: rotate(337deg);
+  transform: rotate(337deg);
+}
