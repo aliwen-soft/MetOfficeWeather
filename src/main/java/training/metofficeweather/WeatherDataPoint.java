@@ -44,24 +44,27 @@ public class WeatherDataPoint {
     }
 
     public void setVisibility(String visibility) {
-        this.visibility = WeatherTypeDecoder.getVisibilityType(visibility);
+        this.visibility = WeatherDecoder.getVisibilityType(visibility);
     }
 
     public void setWeatherType(String weatherType) {
-        this.weatherType = WeatherTypeDecoder.getWeatherType(weatherType);
+        this.weatherType = WeatherDecoder.getWeatherType(weatherType);
+    }
+
+    public void setTime(String time) {
+        int hours = Integer.parseInt(time)/60;
+        this.time = Integer.toString(hours)+":00";
     }
 
     public void addUnits(Map<String, WeatherCode> metaData){
         if(hasUnits ==false){
-            this.windDirection =this.windDirection+ metaData.get("D").getUnits();
-            this.feelsLike =this.feelsLike+ metaData.get("F").getUnits();
+            this.feelsLike =this.feelsLike+"°"+ metaData.get("F").getUnits();
             this.windGust =this.windGust+ metaData.get("G").getUnits();
             this.relativeHumidity =this.relativeHumidity+ metaData.get("H").getUnits();
-            this.temperature =this.temperature+ metaData.get("T").getUnits();
+            this.temperature =this.temperature+"°"+  metaData.get("T").getUnits();
             this.windSpeed =this.windSpeed+ metaData.get("S").getUnits();
             this.maxUV =this.maxUV+ metaData.get("U").getUnits();
             this.precipitationProbability =this.precipitationProbability+ metaData.get("Pp").getUnits();
-            this.time =this.time+ metaData.get("$").getUnits();
             hasUnits = true;
         }
     }
