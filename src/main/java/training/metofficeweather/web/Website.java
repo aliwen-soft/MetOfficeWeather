@@ -17,11 +17,12 @@ public class Website {
     }
 
     @RequestMapping("/weatherInfo")
-    ModelAndView weatherInfo(@RequestParam("locationId") String locationId) {
-        WeatherInfo weatherInfo = new WeatherInfo(locationId);
+    ModelAndView weatherInfo(@RequestParam("location") String location) {
+        WeatherInfo weatherInfo = new WeatherInfo(location);
         weatherInfo.populateData();
         return new ModelAndView("info", "weatherInfo", weatherInfo) ;
     }
+
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Website.class, args);
