@@ -84,7 +84,6 @@ public class WeatherCLI {
            MetAPIReader.printWeatherFromId(command);
         }
         catch (JsonProcessingException e) {
-            e.printStackTrace();
             System.out.println("Error processing JSON information.");
         }
     }

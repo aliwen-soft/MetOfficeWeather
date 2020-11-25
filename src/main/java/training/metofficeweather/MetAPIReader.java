@@ -1,7 +1,6 @@
 package training.metofficeweather;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
@@ -98,10 +97,9 @@ public class MetAPIReader {
             String fullURL = BASE_URL + "sitelist" + "?key=" + getAPIKey();
             String data = getData(fullURL);
             ObjectMapper objectMapper = new ObjectMapper();
-            LocationSiteResponse mapLocs = objectMapper.readValue(data,LocationSiteResponse.class);
-            locations = mapLocs.getLocations().getLocations();
+            LocationSiteResponse locationSiteResponse = objectMapper.readValue(data,LocationSiteResponse.class);
+            locations = locationSiteResponse.getLocations().getLocationList();
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
             System.out.println("Critical: default locations could not be loaded.");
         }
         return locations;

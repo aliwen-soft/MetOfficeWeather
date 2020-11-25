@@ -10,5 +10,5 @@ import java.util.List;
 @Setter
 public class LocationListResponse {
     @JsonProperty("Location")
-    private List<Location> locations;
+    private List<Location> locationList;
 }
