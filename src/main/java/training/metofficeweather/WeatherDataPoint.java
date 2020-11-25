@@ -43,6 +43,13 @@ public class WeatherDataPoint {
         }
     }
 
+    public void setVisibility(String visibility) {
+        this.visibility = WeatherTypeDecoder.getVisibilityType(visibility);
+    }
+
+    public void setWeatherType(String weatherType) {
+        this.weatherType = WeatherTypeDecoder.getWeatherType(weatherType);
+    }
 
     public void addUnits(Map<String, WeatherCode> metaData){
         if(hasUnits ==false){
