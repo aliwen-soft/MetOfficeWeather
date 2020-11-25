@@ -9,7 +9,9 @@ import java.util.List;
 @Setter
 public class DataForTime {
     private String type;
-    private String value;
+    @JsonProperty("value")
+    protected String timeValue;
     @JsonProperty("Rep")
     private List<WeatherDataPoint> weatherDataPoints;
+
 }
