@@ -16,12 +16,7 @@ public class WeatherInfo {
     public WeatherInfo(String locationReference) {
         String numericId;
         boolean isNumeric;
-
-
-    public WeatherInfo(String locationReference) {
-        String numericId;
-        boolean isNumeric;
-        try {
+        try{
             Integer.parseInt(locationReference);
             isNumeric = true;
         } catch (NumberFormatException e) {
@@ -60,4 +55,5 @@ public class WeatherInfo {
         if (0 < maxDayListIndex)
             weatherDataByDay.get(0).setDayOfTheWeek();
     }
+
 }
