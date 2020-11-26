@@ -11,42 +11,50 @@ public class WeatherInfo {
     private final String locationId;
     private List<DataForDay> weatherDataByDay;
 
-    private String hasError = "";
+    private String error = "";
 
-    public WeatherInfo(String location) {
-        String locationId1;
-        boolean isId;
+    public WeatherInfo(String locationReference) {
+        String numericId;
+        boolean isNumeric;
+
         try {
-            Integer.parseInt(location);
-            isId= true;
+            Integer.parseInt(locationReference);
+            isNumeric = true;
         } catch (NumberFormatException e) {
-            isId= false;
+            isNumeric = false;
         }
-        if (isId) {
-            locationId1 = location;
-        }else{
+
+        if (isNumeric) {
+            numericId = locationReference;
+        } else {
             try {
-                Location loc = MetAPIReader.getLocationFromName(location);
-                locationId1 = loc.getId();
+                Location loc = MetAPIReader.getLocationFromName(locationReference);
+                numericId = loc.getId();
             } catch (InvalidLocNameException e) {
-                locationId1 =null;
-                hasError=e.getMessage();
+                numericId = null;
+                error = e.getMessage();
             }
-
         }
-        this.locationId = locationId1;
+        this.locationId = numericId;
     }
 
-    public void populateData(){
+    public void populateData() {
         try {
-            if(hasError.equals("")) {
+            if (error.equals(""))
                 this.weatherDataByDay = MetAPIReader.getListOfWeatherDataPointsByDay(locationId);
-            }
-        } catch (JsonProcessingException e) {
-            hasError = e.getMessage();
-        } catch (InvalidIDException invalidIDException) {
-            hasError = invalidIDException.getMessage();
+        } catch (JsonProcessingException | InvalidIDException e) {
+            this.weatherDataByDay = null;
+            error = e.getMessage();
         }
     }
 
+    public void populateRestrictedData(int dayLimit) {
+        populateData();
+        if (weatherDataByDay == null)
+            return;
+        int maxDayListIndex = Math.min(dayLimit, weatherDataByDay.size());
+        weatherDataByDay = weatherDataByDay.subList(0, maxDayListIndex);
+        if (0 < maxDayListIndex)
+            weatherDataByDay.get(0).setDayOfTheWeek();
+    }
 }

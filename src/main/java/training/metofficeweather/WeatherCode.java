@@ -18,5 +18,4 @@ public class WeatherCode {
         this.units = units;
         this.description = description;
     }
-    
 }

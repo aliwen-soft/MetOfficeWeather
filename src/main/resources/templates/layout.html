@@ -5,15 +5,14 @@
     <title>Layout</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"
           href="../../css/bootstrap.min.css" />
-    <link rel="stylesheet"  href="../../css/rotation.css" />
-
-
+    <link rel="stylesheet" th:href="@{/css/rotation.css}"
+          href="../../css/rotation.css" />
 </head>
 <body>
-<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-    <a class="navbar-brand" th:href="@{/}">MetOfficeWeatherBoard</a>
-</nav>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+        <a class="navbar-brand" th:href="@{/}">MetOfficeWeatherBoard</a>
+    </nav>
 
-<div layout:fragment="content"></div>
+    <div layout:fragment="content"></div>
 </body>
 </html>

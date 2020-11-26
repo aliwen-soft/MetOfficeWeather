@@ -1,0 +1,198 @@
+html {
+    height: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100%;
+    padding-bottom: 3rem;
+    background: linear-gradient(to bottom right, #23a5f6, #9dd7fb) fixed center / cover no-repeat;
+}
+
+.translucent {
+    background: #fff4;
+}
+
+.navbar-light {
+    background: #fffb;
+    box-shadow: 0 -1px 5px #23a5f6;
+    transition: all 0.2s;
+}
+
+.navbar-light:hover {
+    background: white;
+}
+
+.jumbotron {
+    padding-top: 8rem;
+}
+
+.light-heading {
+    font-weight: 300;
+}
+
+.form-narrow {
+    max-width: 22em;
+    margin: auto;
+}
+
+.form-dropdown {
+    position: relative;
+}
+
+.input-dropdown {
+    position: absolute;
+    z-index: 1000;
+}
+
+.dropdown-menu {
+    width: 100%;
+}
+
+.alert-danger {
+    color: #f3071d;
+    background-color: #ffeffb;
+    border-color: #ff97a3;
+}
+
+.alert-overlay {
+    position: absolute;
+    width: 100%;
+    overflow: hidden;
+}
+
+.alert-temporary {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    transition: all 0.5s;
+}
+
+.btn-sky {
+    background: #23a5f6;
+    border-color: #23a5f6;
+}
+
+.btn-sky:hover {
+    background: #0a9bf5;
+    border-color: #0a9bf5;
+}
+
+.btn-sky:active, .btn-sky:focus {
+    background: #098bdc;
+    border-color: #098bdc;
+}
+
+.nav-tabs .nav-item {
+    width: 33.333%;
+    max-width: 12.5rem;
+}
+
+.nav-tabs .nav-link {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 300;
+    text-align: center;
+    padding: 0.5rem;
+    transition: all 0.2s;
+}
+
+.nav-tabs .nav-link.active {
+    background: #fffb;
+    color: #23a5f6;
+    font-weight: 500;
+    border-bottom: 1px solid #77c3faaa;
+}
+
+.nav-tabs .nav-link:not(.active):hover {
+    background: #fff4;
+    border-bottom: 1px solid #77c3faaa;
+}
+
+.tab-content {
+    border: 1px solid #dee2e6;
+    border-top: none;
+    border-bottom-left-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+}
+
+.carousel-control-prev, .carousel-control-next {
+    max-width: 70px;
+}
+
+.carousel-item {
+    padding-bottom: calc(1rem + 23px);
+}
+
+.carousel-box {
+    width: 70%;
+    min-width: calc(100% - 140px);
+    margin: 3rem auto 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-box {
+    background: white;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    width: 47%;
+    height: 30vw;
+    min-height: 12rem;
+    max-height: 288px;
+    overflow: hidden;
+}
+
+.info-box-container {
+    width: 47%;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-box-transparent {
+    width: fit-content;
+    height: fit-content;
+}
+
+svg.clock {
+    max-width: 8.5rem;
+    max-height: 8.5rem;
+    padding-right: 1rem;
+}
+
+svg.clock-3 line.clock-3,
+svg.clock-6 line.clock-6,
+svg.clock-9 line.clock-9 {
+    stroke: black;
+}
+
+img.compass {
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 50%;
+}
+
+@media only screen and (max-width: 575px) {
+    html {
+        font-size: 12px;
+    }
+
+    .nav-tabs .nav-link {
+        font-size: 15px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .info-box, .info-box-container {
+        width: 100%;
+    }
+}

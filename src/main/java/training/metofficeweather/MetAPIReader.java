@@ -3,6 +3,7 @@ package training.metofficeweather;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.glassfish.jersey.jackson.JacksonFeature;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
@@ -29,8 +30,8 @@ public class MetAPIReader {
                 .filter(loc -> locName.equals(loc.getName()))
                 .findAny()
                 .orElse(null);
-        if (location ==null){
-            throw new InvalidLocNameException(locName+" Is Not a Valid Location Name");
+        if (location == null) {
+            throw new InvalidLocNameException("No weather station found with name \"" + locName + "\"");
         }
         return location;
     }
@@ -55,7 +56,7 @@ public class MetAPIReader {
                 }
             }
         } else {
-            throw new InvalidIDException(locId + " is not a valid ID");
+            throw new InvalidIDException("No weather station found with ID \"" + locId + "\"");
         }
 
         return dataForDays;
