@@ -21,10 +21,11 @@ public class WeatherCLI {
             String commandInput = scanner.nextLine();
             String command = removeExcessSpace(commandInput);
 
-            if (isNumberCommand(command))
+            if (isNumberCommand(command)) {
                 runNumberCommand(command);
-            else if (!isExitCommand(command))
+            } else if (!isExitCommand(command)) {
                 runStationNameCommand(command);
+            }
             if (isExitCommand(command) || shouldDiscontinueCommandRequests(scanner))
                 break;
         }
@@ -93,9 +94,7 @@ public class WeatherCLI {
             MetAPIReader.printWeatherFromName(command);
         } catch (JsonProcessingException e) {
             System.out.println("Error processing JSON information.");
-        } catch (InvalidIDException invalidIDException) {
-            System.out.println(invalidIDException.getMessage());
-        } catch (InvalidLocNameException e) {
+        } catch (InvalidIDException | InvalidLocNameException e) {
             System.out.println(e.getMessage());
         }
     }

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3-Day Forecast</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="../../css/style.css">
+    <link rel="stylesheet" th:href="@{/css/rotation.css}" href="../../css/rotation.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-light fixed-top">
+        <a class="navbar-brand" href="#">Met Office Weather</a>
+    </nav>
+
+    <div class="jumbotron translucent">
+        <div class="container text-center">
+            <h1 class="display-2">Time for some weather</h1>
+            <h3 class="light-heading mt-4">Search for a location to get a 3-day forecast</h3>
+            <form class="form-narrow form-dropdown py-4 mb-5">
+                <div class="input-group input-dropdown">
+                    <input type="text" class="form-control" name="location" id="location-input" placeholder="Location" aria-label="Location" aria-describedby="btn-location-search">
+                    <div class="input-group-append">
+                        <button class="btn btn-sky text-light" type="submit" id="btn-location-search">Search</button>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-secondary btn-block dropdown-toggle" type="button" id="location-dropdown-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Location Search
+                    </button>
+                    <div class="dropdown-menu" id="location-dropdown-menu" aria-labelledby="location-dropdown-button"></div>
+                </div>
+                <div class="alert alert-danger alert-overlay alert-temporary my-3"
+                     th:if="${weatherInfo != null && weatherInfo.error != ''}"
+                     th:text="${weatherInfo.error} + '!'">
+                    No weather stations found with that name!
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="container pt-5" id="forecast" th:if="${weatherInfo != null && weatherInfo.error == ''}">
+        <h1 class="display-4 mt-3 mb-4">Weather for <strong th:text="${param.location}">Somewhere</strong></h1>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation" th:each="weatherDayData, iter : ${weatherInfo.weatherDataByDay}">
+                <a class="nav-link" th:classappend="${iter.index == 0 ? 'active' : ''}"
+                   th:id="${weatherDayData.dayOfTheWeek} + '-tab'" id="day-tab"
+                   th:href="'#' + ${weatherDayData.dayOfTheWeek}" href="#day"
+                   data-toggle="tab" role="tab"
+                   th:aria-selected="${iter.index == 0} ? 'true' : 'false'" aria-selected="true"
+                   th:aria-controls="${weatherDayData.dayOfTheWeek}" aria-controls="day"
+                   th:text="${iter.index == 0 ? 'Today' : iter.index == 1 ? 'Tomorrow' : weatherDayData.dayOfTheWeek}">Day</a>
+            </li>
+        </ul>
+        <div class="tab-content translucent" id="weather-tab-content">
+            <div th:each="weatherDayData, iter : ${weatherInfo.weatherDataByDay}"
+                 role="tabpanel" class="tab-pane fade" th:classappend="${iter.index == 0 ? 'show active' : ''}"
+                 th:id="${weatherDayData.dayOfTheWeek}" id="day"
+                 th:aria-labelledby="${weatherDayData.dayOfTheWeek} + '-tab'" aria-labelledby="day-tab">
+                <div th:id="${weatherDayData.dayOfTheWeek} + '-carousel'" id="day-carousel" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li th:each="weatherTimeData, iter : ${weatherDayData.weatherDataPoints}"
+                            th:class="${iter.index == #lists.size(weatherDayData.weatherDataPoints) / 2} ? 'active' : ''"
+                            th:data-target="'#' + ${weatherDayData.dayOfTheWeek} + '-carousel'" data-target="#day-carousel"
+                            th:data-slide-to="${iter.index}" data-slide-to="0"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div th:each="weatherTimeData, iter : ${weatherDayData.weatherDataPoints}"
+                             class="carousel-item" th:classappend="${iter.index == #lists.size(weatherDayData.weatherDataPoints) / 2} ? 'active' : ''">
+                            <div class="carousel-box">
+                                <div class="info-box-container">
+                                    <svg class="clock" th:classappend="'clock-' + (${weatherTimeData.time == '3:00' || weatherTimeData.time == '15:00'} ? '3' : (${weatherTimeData.time == '6:00' || weatherTimeData.time == '18:00'} ? '6' : (${weatherTimeData.time == '9:00' || weatherTimeData.time == '21:00'} ? '9' : '12')))"
+                                         width="100%" height="100%" viewBox="0 0 300 300">
+                                        <circle cx="150" cy="150" r="148" fill-opacity="0" stroke="black" stroke-width="3" stroke-opacity="1"></circle>
+                                        <circle cx="150" cy="150" r="4"></circle>
+                                        <line x1="150" x2="150" y1="14"  y2="136" stroke="black" stroke-width="4" stroke-linecap="round"></line>
+                                        <line x1="272" x2="285" y1="150" y2="150" stroke="black" stroke-width="4" stroke-linecap="round"></line>
+                                        <line x1="15"  x2="28"  y1="150" y2="150" stroke="black" stroke-width="4" stroke-linecap="round"></line>
+                                        <line x1="150" x2="150" y1="272" y2="285" stroke="black" stroke-width="4" stroke-linecap="round"></line>
+                                        <circle cx="219" cy="35"  r="3"></circle>
+                                        <circle cx="266" cy="85"  r="3"></circle>
+                                        <circle cx="219" cy="265" r="3"></circle>
+                                        <circle cx="266" cy="215" r="3"></circle>
+                                        <circle cx="81"  cy="35"  r="3"></circle>
+                                        <circle cx="34"  cy="85"  r="3"></circle>
+                                        <circle cx="81"  cy="265" r="3"></circle>
+                                        <circle cx="34"  cy="215" r="3"></circle>
+                                        <line class="clock-3" x1="164" x2="235" y1="150" y2="150" stroke="none" stroke-width="4" stroke-linecap="round"></line>
+                                        <line class="clock-6" x1="150" x2="150" y1="164" y2="235" stroke="none" stroke-width="4" stroke-linecap="round"></line>
+                                        <line class="clock-9" x1="136" x2="65"  y1="150" y2="150" stroke="none" stroke-width="4" stroke-linecap="round"></line>
+                                    </svg>
+                                    <div class="info-box-transparent">
+                                        <p class="lead mb-0">Outlook for</p>
+                                        <h1 class="display-4" th:text="${weatherTimeData.time}">12pm</h1>
+                                        <p th:text="${weatherTimeData.weatherType}">A bit cloudy</p>
+                                    </div>
+                                </div>
+                                <div class="info-box">
+                                    <p class="lead">Wind</p>
+                                    <p>Speed: <span th:text="${weatherTimeData.windSpeed}">2mph</span></p>
+                                    <p>Gust: <span th:text="${weatherTimeData.windGust}">7mph</span></p>
+                                    <p>Direction:&nbsp;&nbsp;<img class="compass" th:classappend="'rotate' + ${weatherTimeData.windDirection}" th:src="@{/img/arrow.png}" src="../../img/arrow.png" height=40 width=40></p>
+                                </div>
+                                <div class="info-box">
+                                    <p class="lead">Temperature</p>
+                                    <p>Temperature: <span th:text="${weatherTimeData.temperature}">5C</span></p>
+                                    <p>Feels like: <span th:text="${weatherTimeData.feelsLike}">4C</span></p>
+                                </div>
+                                <div class="info-box">
+                                    <p class="lead">Other</p>
+                                    <p>UV index: <span th:text="${weatherTimeData.maxUV}">1</span></p>
+                                    <p>Humidity: <span th:text="${weatherTimeData.relativeHumidity}">90%</span></p>
+                                    <p>Precipitation: <span th:text="${weatherTimeData.precipitationProbability}">20%</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" th:href="'#' + ${weatherDayData.dayOfTheWeek} + '-carousel'" href="#today-carousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" th:href="'#' + ${weatherDayData.dayOfTheWeek} + '-carousel'" href="#today-carousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/string-similarity@4.0.1/umd/string-similarity.min.js"></script>
+    <script th:src="@{/js/met-sitelist.js}" src="../../js/met-sitelist.js"></script>
+    <script th:src="@{/js/initialise.js}" src="../../js/initialise.js"></script>
+</body>
+</html>

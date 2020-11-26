@@ -1,13 +1,16 @@
 package training.metofficeweather;
 
+import lombok.Getter;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.Locale;
 
+@Getter
 public class DataForDay extends DataForTime {
-    private String dayOfTheWeek="unknown";
+    private String dayOfTheWeek = "unknown";
 
     @Override
     public void setTimeValue(String timeValue) {
@@ -21,8 +24,7 @@ public class DataForDay extends DataForTime {
         String dateFromString = getTimeValue();
         LocalDate localDate = LocalDate.parse(dateFromString, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         DayOfWeek dayOfWeek = localDate.getDayOfWeek();
-        dayOfTheWeek= dayOfWeek.getDisplayName(TextStyle.FULL, new Locale("en", "GB"));
-
+        dayOfTheWeek = dayOfWeek.getDisplayName(TextStyle.FULL, new Locale("en", "GB"));
     }
 }
 

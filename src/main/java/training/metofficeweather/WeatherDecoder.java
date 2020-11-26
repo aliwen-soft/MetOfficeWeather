@@ -3,7 +3,6 @@ package training.metofficeweather;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class WeatherDecoder {
     private static final Map<String, String> TYPE_MAP = new HashMap<String, String>() {{
         put("NA", "Not available");
@@ -38,8 +37,6 @@ public class WeatherDecoder {
         put("28", "Thunder shower (night)");
         put("29", "Thunder shower (day)");
         put("30", "Thunder");
-
-
     }};
     private static final Map<String, String> VISIBILITY_MAP = new HashMap<String, String>() {{
         put("UN", "Unknown");
@@ -49,7 +46,6 @@ public class WeatherDecoder {
         put("GO", "Good - Between 10-20 km");
         put("VG", "Very good - Between 20-40 km");
         put("EX", "Excellent - More than 40 km");
-
     }};
 
     private WeatherDecoder() {

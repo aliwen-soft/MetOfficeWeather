@@ -18,5 +18,4 @@ public class DataAtLocation {
     private String elevation;
     @JsonProperty("Period")
     private List<DataForDay> period;
-
 }

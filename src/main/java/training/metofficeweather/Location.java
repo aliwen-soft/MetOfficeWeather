@@ -15,8 +15,4 @@ public class Location {
     private String unitaryAuthArea;
     private String obsSource;
     private String nationalPark;
-
-    public void prinloc(){
-        System.out.println(this.name);
-    }
 }

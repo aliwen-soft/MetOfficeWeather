@@ -13,5 +13,4 @@ public class DataForTime {
     protected String timeValue;
     @JsonProperty("Rep")
     private List<WeatherDataPoint> weatherDataPoints;
-
 }
