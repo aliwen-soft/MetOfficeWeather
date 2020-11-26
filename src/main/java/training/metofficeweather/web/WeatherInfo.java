@@ -17,13 +17,16 @@ public class WeatherInfo {
         String numericId;
         boolean isNumeric;
 
+
+    public WeatherInfo(String locationReference) {
+        String numericId;
+        boolean isNumeric;
         try {
             Integer.parseInt(locationReference);
             isNumeric = true;
         } catch (NumberFormatException e) {
             isNumeric = false;
         }
-
         if (isNumeric) {
             numericId = locationReference;
         } else {
