@@ -14,7 +14,7 @@ public class WeatherInfo {
     private String hasError = "";
 
     public WeatherInfo(String location) {
-        String locationId1;
+        String locationIdTemp;
         boolean isId;
         try {
             Integer.parseInt(location);
@@ -23,18 +23,18 @@ public class WeatherInfo {
             isId= false;
         }
         if (isId) {
-            locationId1 = location;
+            locationIdTemp = location;
         }else{
             try {
                 Location loc = MetAPIReader.getLocationFromName(location);
-                locationId1 = loc.getId();
+                locationIdTemp = loc.getId();
             } catch (InvalidLocNameException e) {
-                locationId1 =null;
+                locationIdTemp =null;
                 hasError=e.getMessage();
             }
 
         }
-        this.locationId = locationId1;
+        this.locationId = locationIdTemp;
     }
 
     public void populateData(){
