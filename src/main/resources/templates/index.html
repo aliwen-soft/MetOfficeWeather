@@ -23,7 +23,7 @@
             </form>
             <form id="nameform" th:action="@{/weatherInfo}" method="get">
                 <fieldset>
-                    <legend>Location DropDowList: </legend>
+                    <legend>Location dropdown: </legend>
                     <select name="location" id="locationinfo">
                         <option th:each="location : ${locationInfo.locationList}"  th:value="${location.id}" th:text="${location.name}"></option>
                     </select>
