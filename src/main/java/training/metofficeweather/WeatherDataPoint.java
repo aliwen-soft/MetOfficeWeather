@@ -45,7 +45,7 @@ public class WeatherDataPoint {
 
     public void setTime(String time) {
         int hours = Integer.parseInt(time)/60;
-        this.time = Integer.toString(hours)+":00";
+        this.time = hours +":00";
     }
 
     public void addUnits(Map<String, WeatherCode> metaData){

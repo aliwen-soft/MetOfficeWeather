@@ -74,7 +74,7 @@ public class MetAPIReader {
     private static MetResponse getMETResponse(String locId) throws JsonProcessingException {
         String query = "?res=3hourly&key=";
         String fullURL = BASE_URL + locId + query + getAPIKey();
-        String data = getData(fullURL);
+        String data = getDataFromURL(fullURL);
         ObjectMapper objectMapper = new ObjectMapper();
 
         SiteResponse metResponseMap = objectMapper.readValue(data, SiteResponse.class);
@@ -96,7 +96,7 @@ public class MetAPIReader {
         List<Location> locations = null;
         try {
             String fullURL = BASE_URL + "sitelist" + "?key=" + getAPIKey();
-            String data = getData(fullURL);
+            String data = getDataFromURL(fullURL);
             ObjectMapper objectMapper = new ObjectMapper();
             LocationSiteResponse locationSiteResponse = objectMapper.readValue(data, LocationSiteResponse.class);
             locations = locationSiteResponse.getLocations().getLocationList();
@@ -106,7 +106,7 @@ public class MetAPIReader {
         return locations;
     }
 
-    private static String getData(String fullURL) {
+    private static String getDataFromURL(String fullURL) {
         Client client = ClientBuilder.newBuilder().register(JacksonFeature.class).build();
         String data = client.target(fullURL)
                 .request(MediaType.TEXT_PLAIN)
