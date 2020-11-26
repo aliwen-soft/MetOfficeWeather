@@ -44,7 +44,7 @@ public class MetAPIReader {
         List<DataForDay> dataForDays = new ArrayList<>();
         MetResponse metResponse = getMETResponse(locId);
         if (metResponse.getDataValues().getLocation() != null) {
-            Map<String, WeatherCode> dataKeyMap = getDataKeyMap(metResponse);
+            Map<String, WeatherCode> dataKeyMap = getWeatherCodeMap(metResponse);
             dataForDays = metResponse.getDataValues().getLocation().getPeriod();
             for (DataForDay day : dataForDays) {
                 day.setDayOfTheWeek();
@@ -82,7 +82,7 @@ public class MetAPIReader {
         return metResponseMap.getSiteResponse();
     }
 
-    private static Map<String, WeatherCode> getDataKeyMap(MetResponse metResponse) {
+    private static Map<String, WeatherCode> getWeatherCodeMap(MetResponse metResponse) {
         List<WeatherCode> weatherCodeList = metResponse.getMetaData().get("Param");
         Map<String, WeatherCode> weatherCodeMap = new HashMap<>();
         for (WeatherCode weatherCode : weatherCodeList) {
